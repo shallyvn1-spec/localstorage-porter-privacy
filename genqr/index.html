@@ -8,15 +8,35 @@
   <title>VietQR Link Generator | Tạo QR chuyển khoản</title>
   <style>
     :root{color-scheme:light;--navy:#102744;--accent:#2365dc;--accent2:#1b4fae;--muted:#708199;--border:#e2e8f1;--bg:#f4f7fc;--shadow:0 18px 50px rgba(31,54,95,.07);font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
-    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--navy);font-size:14px}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.6;cursor:not-allowed}a{color:var(--accent)}.container{max-width:1380px;margin:0 auto;padding:0 24px}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--navy);font-size:14px}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.6;cursor:not-allowed}a{color:var(--accent)}.container{max-width:1740px;margin:0 auto;padding:0 22px}
     header{background:linear-gradient(110deg,#0b2445,#183d75 70%,#235da2);color:white;box-shadow:0 5px 25px rgba(14,34,69,.13)}
     .head-inner{display:flex;align-items:center;justify-content:space-between;min-height:86px;gap:20px}.logo{display:flex;align-items:center;gap:13px}.mark{height:44px;width:44px;border-radius:13px;background:linear-gradient(145deg,#73b1ff,#4381f9);display:grid;place-items:center;color:white;font-size:24px;font-weight:900;box-shadow:0 4px 18px rgba(41,111,226,.35)}.logo-name{font-weight:800;font-size:20px;letter-spacing:-.7px}.logo-name small{display:block;font-size:11px;color:#b6cdeb;letter-spacing:.65px;font-weight:550;margin-top:3px}.right-head{font-size:12px;color:#bfd0e8}
     .hero{padding:30px 0 27px}.eyebrow{display:inline-flex;align-items:center;gap:7px;color:#3164be;font-weight:800;letter-spacing:1.1px;font-size:10px}.hero h1{font-size:clamp(25px,3vw,34px);line-height:1.23;letter-spacing:-1.05px;margin:9px 0}.hero p{color:#657791;margin:0;font-size:14px;line-height:1.6}
-    .workspace{display:grid;grid-template-columns:280px minmax(345px,1fr) minmax(320px,405px);align-items:start;gap:20px}.panel{background:white;border:1px solid #e2e9f4;border-radius:17px;box-shadow:var(--shadow);overflow:hidden}.panel-header{padding:20px 20px 15px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:6px}.panel-title{font-size:16px;font-weight:800;letter-spacing:-.25px}.panel-subtitle{color:var(--muted);font-size:12px;margin-top:5px;line-height:1.45}.mini-count{font-weight:700;font-size:11px;color:#2b64bd;padding:5px 8px;background:#eef4ff;border-radius:15px;white-space:nowrap}
+    .workspace{display:grid;grid-template-columns:minmax(205px,245px) minmax(330px,1fr) minmax(305px,375px) minmax(270px,335px);align-items:start;gap:16px}.panel{background:white;border:1px solid #e2e9f4;border-radius:17px;box-shadow:var(--shadow);overflow:hidden}.panel-header{padding:20px 20px 15px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:6px}.panel-title{font-size:16px;font-weight:800;letter-spacing:-.25px}.panel-subtitle{color:var(--muted);font-size:12px;margin-top:5px;line-height:1.45}.mini-count{font-weight:700;font-size:11px;color:#2b64bd;padding:5px 8px;background:#eef4ff;border-radius:15px;white-space:nowrap}
     .bank-search{padding:12px 15px 9px}.search-box{position:relative}.search-box svg{position:absolute;width:18px;height:18px;left:12px;top:11px;color:#7d8da1}.search-box input{width:100%;border:1px solid #dce5f0;border-radius:9px;height:41px;padding:0 12px 0 39px;outline:0;background:#f9fbfe}.search-box input:focus,.field input:focus,.field textarea:focus,.field select:focus,.output-text:focus{border-color:#7aa8fa;box-shadow:0 0 0 3px rgba(39,109,228,.10)}.bank-list{padding:0 9px 12px 13px;max-height:578px;overflow-y:auto}.bank-choice{display:flex;align-items:center;gap:10px;cursor:pointer;padding:9px 11px;border-radius:9px;margin-right:5px;transition:background .12s;border:1px solid transparent}.bank-choice:hover{background:#f2f6ff}.bank-choice:has(input:checked){background:#ecf4ff;border-color:#cadefa}.bank-choice input{accent-color:#2465d8;width:16px;height:16px;margin:0;flex-shrink:0}.bank-symbol{width:31px;height:31px;display:grid;place-items:center;border-radius:9px;background:#eff3f9;color:#5476b3;font-size:10px;font-weight:850;flex-shrink:0;letter-spacing:-.4px}.bank-choice:has(input:checked) .bank-symbol{background:#d7e7ff;color:#215fbe}.bank-text{min-width:0;flex:1}.bank-text strong{display:block;font-weight:700;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bank-text small{display:block;color:#8492a8;margin-top:3px;font-size:10px}.no-match{padding:32px 16px;color:var(--muted);text-align:center;font-size:12px}
     form{padding:19px 23px 23px}.field{margin-bottom:17px}.field label{font-size:12px;font-weight:760;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.required{color:#d43d4b}.hint{font-weight:500;color:#8190a5;font-size:11px}.field input,.field textarea,.field select{display:block;width:100%;background:#fff;border:1px solid #dce4f0;border-radius:9px;color:#213a57;min-height:44px;outline:none;padding:10px 13px;transition:border-color .15s,box-shadow .15s}.field textarea{resize:vertical;min-height:71px;line-height:1.5}.field input::placeholder,.field textarea::placeholder{color:#a7b3c1}.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px}.input-suffix{position:relative}.input-suffix input{padding-right:52px}.suffix{position:absolute;right:13px;top:14px;color:#8291a4;font-size:12px;font-weight:750;pointer-events:none}.mini-help{color:#7b8ba0;font-size:11px;line-height:1.5;margin-top:6px}.selected-bank{padding:10px 13px;border-radius:9px;background:#f4f8ff;color:#2e5da4;font-size:12px;margin-bottom:18px}.options{border-top:1px solid var(--border);padding-top:18px;margin-top:2px}.advanced{display:grid;grid-template-columns:1fr 1fr;gap:12px}.advanced .field{margin-bottom:14px}.custom-field{display:none}.custom-field.visible{display:block}.btn-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:6px}.btn{border:1px solid #d5e0ef;border-radius:9px;min-height:44px;padding:0 14px;background:white;color:#344e6d;font-weight:740;display:inline-flex;align-items:center;justify-content:center;gap:9px}.btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.btn:hover{background:#f4f7fc}.btn.primary{background:#2466dc;color:white;border-color:#2466dc;box-shadow:0 5px 11px rgba(31,103,225,.15);flex:1}.btn.primary:hover{background:#1856c2}.btn.soft{background:#f0f5ff;border-color:#d6e4ff;color:#285ab2}.btn.wide{width:100%}.err{color:#b42335;line-height:1.5;background:#fff2f2;border:1px solid #f6c8c8;border-radius:8px;padding:9px 12px;margin:0 0 16px;display:none}.err.show{display:block}
     .preview-inner{padding:16px 19px 20px}.preview-stage{border:1px dashed #cbd9ea;border-radius:13px;min-height:345px;background:linear-gradient(140deg,#f9fbff,#eef5ff);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:15px;color:#7d91a9;text-align:center;position:relative;overflow:hidden}.preview-stage.loaded{background:white;border-style:solid;border-color:#e2eaf4}.qr-icon{width:67px;height:67px;color:#8aa9dc;margin-bottom:15px}.placeholder-title{font-weight:750;color:#52709a;font-size:15px;margin-bottom:7px}.placeholder-sub{font-size:12px;max-width:260px;line-height:1.5}.qr-photo{width:auto;max-width:100%;max-height:455px;object-fit:contain;display:none;border-radius:6px}.loading{display:none;font-size:12px;color:#4a6b9b}.preview-stage.is-loading .loading{display:block}.preview-stage.loaded .qr-photo{display:block}.preview-stage.loaded .placeholder,.preview-stage.is-loading .placeholder{display:none}.preview-badge{display:inline-flex;align-items:center;gap:7px;margin:13px 0 5px;font-size:11px;color:#6484a9}.dot{height:7px;width:7px;border-radius:50%;background:#38b879}.data-summary{border:1px solid #e6ecf4;border-radius:10px;margin-top:12px;padding:0 12px;display:none}.data-summary.active{display:block}.sumrow{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:10px 0;font-size:12px;border-bottom:1px solid #ecf1f6}.sumrow:last-child{border:0}.sumrow>span:first-child{color:#8491a6;white-space:nowrap}.sumrow strong{word-break:break-word;text-align:right;color:#27456e}.link-label{font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:space-between;margin:21px 0 8px}.output-text{width:100%;border:1px solid #dbe4f0;border-radius:9px;background:#f9fbfe;padding:11px;color:#3b5473;resize:vertical;font:11px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;min-height:98px;outline:none;word-break:break-all}.action-row{display:flex;gap:9px;margin-top:11px}.action-row>*{flex:1}.privacy{margin:20px 0 45px;background:#ebf1fa;border-radius:10px;padding:13px 16px;font-size:12px;line-height:1.6;color:#647b99}.privacy strong{color:#3b6298}.footer{border-top:1px solid #e0e6f2;color:#8190a6;text-align:center;padding:18px;font-size:12px}.footer a{text-decoration:none}.hide{display:none!important}
-    @media(max-width:1130px){.workspace{grid-template-columns:245px minmax(320px,1fr)}.preview-panel{grid-column:2}.bank-list{max-height:720px}}@media(max-width:740px){.container{padding:0 14px}.right-head{display:none}.workspace{grid-template-columns:1fr;gap:15px}.preview-panel{grid-column:auto}.head-inner{min-height:75px}.hero{padding:22px 0}.panel-header{padding:17px}.bank-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-height:220px;padding:0 9px 12px}.bank-choice{gap:6px;margin-right:3px;padding:8px 5px}.bank-symbol{width:27px;height:27px}.bank-text strong{font-size:11px}.bank-text small{font-size:9px}.panel form{padding:18px}.duo{grid-template-columns:1fr 1fr}.preview-stage{min-height:310px}}@media(max-width:420px){.duo,.advanced{grid-template-columns:1fr}.hero h1{font-size:27px}.bank-list{grid-template-columns:1fr 1fr}.logo-name{font-size:18px}.logo-name small{font-size:9px}.btn{font-size:12px;padding:0 10px}}
+    @media(max-width:1300px){.workspace{grid-template-columns:235px minmax(315px,1fr) minmax(300px,390px)}.history-panel{grid-column:2 / 4}.history-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.history-list .history-empty{grid-column:1/-1}}@media(max-width:970px){.workspace{grid-template-columns:245px minmax(320px,1fr)}.preview-panel{grid-column:2}.history-panel{grid-column:1 / -1}.history-list{grid-template-columns:repeat(2,minmax(0,1fr))}.bank-list{max-height:720px}}@media(max-width:740px){.container{padding:0 14px}.right-head{display:none}.workspace{grid-template-columns:1fr;gap:15px}.preview-panel{grid-column:auto}.history-panel{grid-column:auto}.history-list{grid-template-columns:1fr}.head-inner{min-height:75px}.hero{padding:22px 0}.panel-header{padding:17px}.bank-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-height:220px;padding:0 9px 12px}.bank-choice{gap:6px;margin-right:3px;padding:8px 5px}.bank-symbol{width:27px;height:27px}.bank-text strong{font-size:11px}.bank-text small{font-size:9px}.panel form{padding:18px}.duo{grid-template-columns:1fr 1fr}.preview-stage{min-height:310px}}@media(max-width:420px){.duo,.advanced{grid-template-columns:1fr}.hero h1{font-size:27px}.bank-list{grid-template-columns:1fr 1fr}.logo-name{font-size:18px}.logo-name small{font-size:9px}.btn{font-size:12px;padding:0 10px}}
+    /* Lịch sử QR: lưu cục bộ, có thể xem lại và xoá riêng từng mục. */
+    .history-panel{min-width:0}.history-list{max-height:765px;overflow:auto;padding:12px;display:grid;gap:10px;align-content:start}
+    .history-entry{position:relative;border:1px solid #e0e8f4;background:#fff;border-radius:12px;padding:12px;transition:border-color .15s,box-shadow .15s;min-width:0}
+    .history-entry:hover{border-color:#9bbcf1;box-shadow:0 4px 16px rgba(22,68,143,.08)}
+    .history-entry:focus-within{border-color:#81aff4}
+    .history-select{display:block;width:100%;border:0;padding:0 28px 0 0;background:transparent;text-align:left;color:inherit;cursor:pointer}
+    .history-title{display:block;font-size:12px;font-weight:800;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+    .history-account,.history-memo,.history-recipient{display:block;margin-top:5px;color:#637791;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .history-bottom{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:10px}
+    .history-amount{color:#1d58c0;font-weight:850;font-size:13px;white-space:nowrap}
+    .history-date{font-size:10px;color:#8b98ac;white-space:nowrap}
+    .history-delete{position:absolute;right:9px;top:9px;display:grid;place-items:center;width:27px;height:27px;border:1px solid transparent;border-radius:8px;background:transparent;color:#8a9bb0;cursor:pointer}
+    .history-delete:hover,.history-delete:focus-visible{background:#fff0f0;color:#c43a46;border-color:#ffd1d5;outline:none}
+    .history-delete svg{height:16px;width:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .history-empty{color:#7789a0;text-align:center;font-size:12px;line-height:1.7;padding:32px 18px;border:1px dashed #d6e1ef;border-radius:12px;background:#fbfdff}
+    .history-foot{padding:0 16px 15px;color:#71839b;font-size:11px;line-height:1.5}
+    .history-notice{display:none;margin:0 12px 12px;border-radius:8px;background:#fff1ed;color:#a43934;font-size:11px;line-height:1.5;padding:9px 11px}
+    .history-notice.visible{display:block}
+    @media(max-width:1300px){.history-list{max-height:430px}}
+    @media(max-width:740px){.history-list{max-height:385px}}
   </style>
 </head>
 <body>
@@ -72,8 +92,14 @@
           <p id="imageError" class="mini-help" style="display:none;color:#b42335" role="status"></p>
         </div>
       </section>
+      <aside class="panel history-panel" aria-labelledby="historyHeading">
+        <div class="panel-header"><div><div class="panel-title" id="historyHeading">Lịch sử tạo QR</div><div class="panel-subtitle">Lưu trên trình duyệt này · Nhấn mục để dùng lại</div></div><div class="mini-count" id="historyCount">0 mục</div></div>
+        <div id="historyList" class="history-list" aria-live="polite"><div class="history-empty">Chưa có lịch sử. Hãy tạo mã QR đầu tiên.</div></div>
+        <div class="history-foot">Tối đa 200 mục mới nhất. Biểu tượng thùng rác xóa từng mục khỏi Local Storage. Dữ liệu không đồng bộ sang thiết bị khác.</div>
+        <p id="historyNotice" class="history-notice" role="status"></p>
+      </aside>
     </section>
-    <div class="privacy"><strong>Thông tin & an toàn:</strong> Trang web này chạy bằng HTML/JavaScript tĩnh, không có cơ sở dữ liệu lưu thông tin tài khoản. Khi bạn tạo mã để xem trước, đường dẫn ảnh sẽ được tải từ máy chủ VietQR và chứa ngân hàng, số tài khoản và các trường bạn nhập. Hãy kiểm tra kỹ thông tin người nhận trong ứng dụng ngân hàng trước khi chuyển tiền. Công cụ không xác minh chủ tài khoản và không thực hiện giao dịch.</div>
+    <div class="privacy"><strong>Thông tin & an toàn:</strong> Trang web này chạy bằng HTML/JavaScript tĩnh, không có cơ sở dữ liệu trên máy chủ; lịch sử form QR được lưu trong Local Storage của trình duyệt này và có thể xóa từng mục. Khi bạn tạo mã để xem trước, đường dẫn ảnh sẽ được tải từ máy chủ VietQR và chứa ngân hàng, số tài khoản và các trường bạn nhập. Hãy kiểm tra kỹ thông tin người nhận trong ứng dụng ngân hàng trước khi chuyển tiền. Công cụ không xác minh chủ tài khoản và không thực hiện giao dịch.</div>
   </main>
   <footer class="footer">VietQR Link Generator · Công cụ không chính thức · Tài liệu: <a href="https://www.vietqr.io/qr-dong" target="_blank" rel="noopener noreferrer">VietQR Quick Link</a></footer>
   <script>
@@ -154,13 +180,107 @@
     }
     $('qrImage').addEventListener('load',()=>{$('previewStage').classList.remove('is-loading');$('previewStage').classList.add('loaded');$('previewStatus').textContent='Đã tạo';});
     $('qrImage').addEventListener('error',()=>{$('previewStage').classList.remove('is-loading','loaded');$('previewStatus').textContent='Không tải được ảnh';$('imageError').textContent='Không tải được ảnh từ VietQR. Kiểm tra mã template, STK hoặc đổi máy chủ về img.vietqr.io, rồi tạo lại. Bạn vẫn có thể mở link để kiểm tra trực tiếp.';$('imageError').style.display='block';$('previewPlaceholder').querySelector('.placeholder-title').textContent='Không tải được ảnh QR';$('previewPlaceholder').querySelector('.placeholder-sub').textContent='Kiểm tra link hoặc thử template compact2 trên img.vietqr.io.';});
-    $('qrForm').addEventListener('submit',e=>{e.preventDefault();clearError();const data=validate();if(data.error){showError(data.error);return;}renderImage(data);});
+    // History is saved only when the user generates a QR, never for draft changes.
+    // This key is specific to VietQR tool and does not collide with other pages on GitHub Pages.
+    const HISTORY_KEY='vietqr_link_generator_history_v1';
+    const HISTORY_LIMIT=200;
+    let qrHistory=[];
+    const safeText=(value,max=80)=>typeof value==='string'?value.slice(0,max):'';
+    function historyNotice(message){const el=$('historyNotice');el.textContent=message;el.classList.toggle('visible',!!message);}
+    function loadHistory(){
+      try{
+        const data=JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]');
+        qrHistory=Array.isArray(data)?data.filter(row=>row&&typeof row==='object'&&typeof row.id==='string').slice(0,HISTORY_LIMIT):[];
+        historyNotice('');
+      }catch(err){qrHistory=[];historyNotice('Không thể đọc lịch sử trên trình duyệt này: '+err.message);}
+      renderHistory();
+    }
+    function persistHistory(items){
+      try {localStorage.setItem(HISTORY_KEY,JSON.stringify(items));historyNotice('');return true;}
+      catch(err){historyNotice('Không thể lưu lịch sử. Hãy kiểm tra quyền Local Storage hoặc dung lượng trình duyệt. '+err.message);return false;}
+    }
+    function saveHistoryEntry(data){
+      const item={
+        id:(globalThis.crypto&&typeof crypto.randomUUID==='function')?crypto.randomUUID():'qr-'+Date.now()+'-'+Math.random().toString(36).slice(2),
+        createdAt:Date.now(),bankCode:data.bank.code,bankName:data.bank.name,bankBin:data.bank.bin||'',
+        accountNo:data.no,accountName:data.name,amount:data.amt,memo:data.memo,
+        template:$('template').value,customTemplate:$('customTemplate').value.trim(),
+        host:$('hostSelect').value,imageType:$('imageType').value
+      };
+      const next=[item,...qrHistory].slice(0,HISTORY_LIMIT);
+      if(persistHistory(next)){qrHistory=next;renderHistory();}
+    }
+    function formatHistoryDate(value){
+      const stamp=Number(value);
+      if(!Number.isFinite(stamp))return 'Không rõ ngày';
+      const date=new Date(stamp);
+      if(!Number.isFinite(date.getTime()))return 'Không rõ ngày';
+      return date.toLocaleString('vi-VN',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit',year:'numeric'});
+    }
+    function renderHistory(){
+      const list=$('historyList');list.replaceChildren();$('historyCount').textContent=qrHistory.length+' mục';
+      if(!qrHistory.length){const empty=document.createElement('div');empty.className='history-empty';empty.textContent='Chưa có lịch sử. Hãy nhập thông tin và nhấn “Tạo link và xem QR”.';list.append(empty);return;}
+      const frag=document.createDocumentFragment();
+      for(const item of qrHistory){
+        const row=document.createElement('article');row.className='history-entry';
+        const select=document.createElement('button');select.type='button';select.className='history-select';
+        select.title='Điền lại form và xem trước QR này';select.setAttribute('aria-label','Dùng lại QR '+safeText(item.bankName,100)+' '+safeText(item.accountNo,19));
+        const title=document.createElement('strong');title.className='history-title';title.textContent=safeText(item.bankName,100)||safeText(item.bankCode,20)||'Ngân hàng';
+        const account=document.createElement('span');account.className='history-account';account.textContent='STK: '+safeText(item.accountNo,19);
+        const recipient=document.createElement('span');recipient.className='history-recipient';recipient.textContent='Người nhận: '+(safeText(item.accountName,60)||'—');
+        const memo=document.createElement('span');memo.className='history-memo';memo.textContent='Nội dung: '+(safeText(item.memo,50)||'—');
+        const bottom=document.createElement('div');bottom.className='history-bottom';
+        const amount=document.createElement('span');amount.className='history-amount';
+        const digits=safeText(item.amount,13).replace(/\D/g,'');amount.textContent=digits?Number(digits).toLocaleString('vi-VN')+' ₫':'Chưa đặt số tiền';
+        const date=document.createElement('time');date.className='history-date';date.textContent=formatHistoryDate(item.createdAt);date.dateTime=(Number.isFinite(Number(item.createdAt))&&Number.isFinite(new Date(Number(item.createdAt)).getTime()))?new Date(Number(item.createdAt)).toISOString():'';
+        bottom.append(amount,date);select.append(title,account,recipient,memo,bottom);
+        select.addEventListener('click',()=>restoreHistory(item.id));
+        const remove=document.createElement('button');remove.className='history-delete';remove.type='button';remove.title='Xóa mục này khỏi lịch sử';remove.setAttribute('aria-label','Xóa lịch sử '+safeText(item.accountNo,19));
+        remove.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v7M14 11v7M6 7l1 14h10l1-14M9 7V4h6v3"/></svg>';
+        remove.addEventListener('click',()=>removeHistory(item.id));
+        row.append(select,remove);frag.append(row);
+      }
+      list.append(frag);
+    }
+    function removeHistory(id){
+      const item=qrHistory.find(row=>row.id===id);
+      if(!item)return;
+      if(!window.confirm('Xóa lịch sử QR của '+(safeText(item.bankName,100)||'ngân hàng')+' - '+safeText(item.accountNo,19)+'?'))return;
+      const next=qrHistory.filter(row=>row.id!==id);
+      if(persistHistory(next)){qrHistory=next;renderHistory();}
+    }
+    function restoreHistory(id){
+      const item=qrHistory.find(row=>row.id===id);if(!item)return;
+      let bank=bankData.find(row=>row.code===item.bankCode);
+      if(!bank && /^[A-Za-z0-9_]{1,20}$/.test(item.bankCode||'')){
+        bank={code:item.bankCode,name:safeText(item.bankName,80)||item.bankCode,bin:safeText(item.bankBin,8)};
+        bankData.push(bank);bankData.sort(bankSort);
+      }
+      if(!bank){historyNotice('Không thể khôi phục: mã ngân hàng trong lịch sử không hợp lệ.');return;}
+      $('bankSearch').value='';chooseBank(item.bankCode);
+      $('accountNo').value=safeText(item.accountNo,19);
+      $('accountName').value=safeText(item.accountName,60);
+      $('amount').value=formatAmount(safeText(item.amount,13).replace(/\D/g,''));
+      $('amount').dispatchEvent(new Event('input'));
+      $('addInfo').value=safeText(item.memo,50);$('addInfo').dispatchEvent(new Event('input'));
+      $('template').value=['compact2','compact','qr_only','print','custom'].includes(item.template)?item.template:'custom';
+      $('customTemplate').value=safeText(item.customTemplate,36)||'7N4E6e2';
+      $('template').dispatchEvent(new Event('change'));
+      $('hostSelect').value=['img.vietqr.io','api.vietqr.io'].includes(item.host)?item.host:'img.vietqr.io';
+      $('imageType').value=['png','jpg','svg'].includes(item.imageType)?item.imageType:'png';
+      clearError();const data=validate();
+      if(data.error){showError('Lịch sử không còn hợp lệ: '+data.error);return;}
+      renderImage(data);
+      historyNotice('');
+      if(window.innerWidth<=740){$('qrForm').scrollIntoView({behavior:'smooth',block:'start'});}
+    }
+    $('qrForm').addEventListener('submit',e=>{e.preventDefault();clearError();const data=validate();if(data.error){showError(data.error);return;}renderImage(data);saveHistoryEntry(data);});
     $('bankSearch').addEventListener('input',renderBanks);
     $('amount').addEventListener('input',()=>{const digits=amountDigits();$('amount').value=formatAmount(digits);$('amountPreview').textContent=digits?Number(digits).toLocaleString('vi-VN')+' VND':'Để trống nếu không cố định số tiền';});
     $('addInfo').addEventListener('input',()=>{$('memoCount').textContent=$('addInfo').value.length+'/50';});
     $('template').addEventListener('change',()=>{$('customField').classList.toggle('visible',$('template').value==='custom');});
     $('exampleBtn').addEventListener('click',()=>{
-      chooseBank('VCB');$('accountNo').value='0691000330501';$('amount').value='50.000.000';$('amountPreview').textContent='50.000.000 VND';$('addInfo').value='Anh Duong Tam';$('memoCount').textContent='13/50';$('accountName').value='NGUYEN HUU MANH';
+      chooseBank('VBA');$('accountNo').value='7303205153070';$('amount').value='50.000.000';$('amountPreview').textContent='50.000.000 VND';$('addInfo').value='Anh Duong Tam';$('memoCount').textContent='13/50';$('accountName').value='ĐOAN THI LOAN';
       $('template').value='custom';$('customField').classList.add('visible');$('customTemplate').value='7N4E6e2';$('hostSelect').value='api.vietqr.io';$('imageType').value='jpg';clearError();
     });
     $('clearBtn').addEventListener('click',()=>{
@@ -181,7 +301,7 @@
     $('imageType').value='png';
     $('customTemplate').value='7N4E6e2';
     $('customField').classList.add('visible');
-    bankData.sort(bankSort);chooseBank('VCB');refreshBanks();
+    bankData.sort(bankSort);chooseBank('VCB');loadHistory();refreshBanks();
   </script>
 </body>
 </html>
