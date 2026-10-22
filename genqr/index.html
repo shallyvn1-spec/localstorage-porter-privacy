@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c244b">
+  <meta name="description" content="Tạo link VietQR và xem trước mã QR chuyển khoản ngân hàng. Công cụ miễn phí, không cần API key.">
+  <title>VietQR Link Generator | Tạo QR chuyển khoản</title>
+  <style>
+    :root{color-scheme:light;--navy:#102744;--accent:#2365dc;--accent2:#1b4fae;--muted:#708199;--border:#e2e8f1;--bg:#f4f7fc;--shadow:0 18px 50px rgba(31,54,95,.07);font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--navy);font-size:14px}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.6;cursor:not-allowed}a{color:var(--accent)}.container{max-width:1380px;margin:0 auto;padding:0 24px}
+    header{background:linear-gradient(110deg,#0b2445,#183d75 70%,#235da2);color:white;box-shadow:0 5px 25px rgba(14,34,69,.13)}
+    .head-inner{display:flex;align-items:center;justify-content:space-between;min-height:86px;gap:20px}.logo{display:flex;align-items:center;gap:13px}.mark{height:44px;width:44px;border-radius:13px;background:linear-gradient(145deg,#73b1ff,#4381f9);display:grid;place-items:center;color:white;font-size:24px;font-weight:900;box-shadow:0 4px 18px rgba(41,111,226,.35)}.logo-name{font-weight:800;font-size:20px;letter-spacing:-.7px}.logo-name small{display:block;font-size:11px;color:#b6cdeb;letter-spacing:.65px;font-weight:550;margin-top:3px}.right-head{font-size:12px;color:#bfd0e8}
+    .hero{padding:30px 0 27px}.eyebrow{display:inline-flex;align-items:center;gap:7px;color:#3164be;font-weight:800;letter-spacing:1.1px;font-size:10px}.hero h1{font-size:clamp(25px,3vw,34px);line-height:1.23;letter-spacing:-1.05px;margin:9px 0}.hero p{color:#657791;margin:0;font-size:14px;line-height:1.6}
+    .workspace{display:grid;grid-template-columns:280px minmax(345px,1fr) minmax(320px,405px);align-items:start;gap:20px}.panel{background:white;border:1px solid #e2e9f4;border-radius:17px;box-shadow:var(--shadow);overflow:hidden}.panel-header{padding:20px 20px 15px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:6px}.panel-title{font-size:16px;font-weight:800;letter-spacing:-.25px}.panel-subtitle{color:var(--muted);font-size:12px;margin-top:5px;line-height:1.45}.mini-count{font-weight:700;font-size:11px;color:#2b64bd;padding:5px 8px;background:#eef4ff;border-radius:15px;white-space:nowrap}
+    .bank-search{padding:12px 15px 9px}.search-box{position:relative}.search-box svg{position:absolute;width:18px;height:18px;left:12px;top:11px;color:#7d8da1}.search-box input{width:100%;border:1px solid #dce5f0;border-radius:9px;height:41px;padding:0 12px 0 39px;outline:0;background:#f9fbfe}.search-box input:focus,.field input:focus,.field textarea:focus,.field select:focus,.output-text:focus{border-color:#7aa8fa;box-shadow:0 0 0 3px rgba(39,109,228,.10)}.bank-list{padding:0 9px 12px 13px;max-height:578px;overflow-y:auto}.bank-choice{display:flex;align-items:center;gap:10px;cursor:pointer;padding:9px 11px;border-radius:9px;margin-right:5px;transition:background .12s;border:1px solid transparent}.bank-choice:hover{background:#f2f6ff}.bank-choice:has(input:checked){background:#ecf4ff;border-color:#cadefa}.bank-choice input{accent-color:#2465d8;width:16px;height:16px;margin:0;flex-shrink:0}.bank-symbol{width:31px;height:31px;display:grid;place-items:center;border-radius:9px;background:#eff3f9;color:#5476b3;font-size:10px;font-weight:850;flex-shrink:0;letter-spacing:-.4px}.bank-choice:has(input:checked) .bank-symbol{background:#d7e7ff;color:#215fbe}.bank-text{min-width:0;flex:1}.bank-text strong{display:block;font-weight:700;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.bank-text small{display:block;color:#8492a8;margin-top:3px;font-size:10px}.no-match{padding:32px 16px;color:var(--muted);text-align:center;font-size:12px}
+    form{padding:19px 23px 23px}.field{margin-bottom:17px}.field label{font-size:12px;font-weight:760;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.required{color:#d43d4b}.hint{font-weight:500;color:#8190a5;font-size:11px}.field input,.field textarea,.field select{display:block;width:100%;background:#fff;border:1px solid #dce4f0;border-radius:9px;color:#213a57;min-height:44px;outline:none;padding:10px 13px;transition:border-color .15s,box-shadow .15s}.field textarea{resize:vertical;min-height:71px;line-height:1.5}.field input::placeholder,.field textarea::placeholder{color:#a7b3c1}.duo{display:grid;grid-template-columns:1fr 1fr;gap:12px}.input-suffix{position:relative}.input-suffix input{padding-right:52px}.suffix{position:absolute;right:13px;top:14px;color:#8291a4;font-size:12px;font-weight:750;pointer-events:none}.mini-help{color:#7b8ba0;font-size:11px;line-height:1.5;margin-top:6px}.selected-bank{padding:10px 13px;border-radius:9px;background:#f4f8ff;color:#2e5da4;font-size:12px;margin-bottom:18px}.options{border-top:1px solid var(--border);padding-top:18px;margin-top:2px}.advanced{display:grid;grid-template-columns:1fr 1fr;gap:12px}.advanced .field{margin-bottom:14px}.custom-field{display:none}.custom-field.visible{display:block}.btn-row{display:flex;gap:9px;flex-wrap:wrap;margin-top:6px}.btn{border:1px solid #d5e0ef;border-radius:9px;min-height:44px;padding:0 14px;background:white;color:#344e6d;font-weight:740;display:inline-flex;align-items:center;justify-content:center;gap:9px}.btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.btn:hover{background:#f4f7fc}.btn.primary{background:#2466dc;color:white;border-color:#2466dc;box-shadow:0 5px 11px rgba(31,103,225,.15);flex:1}.btn.primary:hover{background:#1856c2}.btn.soft{background:#f0f5ff;border-color:#d6e4ff;color:#285ab2}.btn.wide{width:100%}.err{color:#b42335;line-height:1.5;background:#fff2f2;border:1px solid #f6c8c8;border-radius:8px;padding:9px 12px;margin:0 0 16px;display:none}.err.show{display:block}
+    .preview-inner{padding:16px 19px 20px}.preview-stage{border:1px dashed #cbd9ea;border-radius:13px;min-height:345px;background:linear-gradient(140deg,#f9fbff,#eef5ff);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:15px;color:#7d91a9;text-align:center;position:relative;overflow:hidden}.preview-stage.loaded{background:white;border-style:solid;border-color:#e2eaf4}.qr-icon{width:67px;height:67px;color:#8aa9dc;margin-bottom:15px}.placeholder-title{font-weight:750;color:#52709a;font-size:15px;margin-bottom:7px}.placeholder-sub{font-size:12px;max-width:260px;line-height:1.5}.qr-photo{width:auto;max-width:100%;max-height:455px;object-fit:contain;display:none;border-radius:6px}.loading{display:none;font-size:12px;color:#4a6b9b}.preview-stage.is-loading .loading{display:block}.preview-stage.loaded .qr-photo{display:block}.preview-stage.loaded .placeholder,.preview-stage.is-loading .placeholder{display:none}.preview-badge{display:inline-flex;align-items:center;gap:7px;margin:13px 0 5px;font-size:11px;color:#6484a9}.dot{height:7px;width:7px;border-radius:50%;background:#38b879}.data-summary{border:1px solid #e6ecf4;border-radius:10px;margin-top:12px;padding:0 12px;display:none}.data-summary.active{display:block}.sumrow{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:10px 0;font-size:12px;border-bottom:1px solid #ecf1f6}.sumrow:last-child{border:0}.sumrow>span:first-child{color:#8491a6;white-space:nowrap}.sumrow strong{word-break:break-word;text-align:right;color:#27456e}.link-label{font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:space-between;margin:21px 0 8px}.output-text{width:100%;border:1px solid #dbe4f0;border-radius:9px;background:#f9fbfe;padding:11px;color:#3b5473;resize:vertical;font:11px/1.65 ui-monospace,SFMono-Regular,Consolas,monospace;min-height:98px;outline:none;word-break:break-all}.action-row{display:flex;gap:9px;margin-top:11px}.action-row>*{flex:1}.privacy{margin:20px 0 45px;background:#ebf1fa;border-radius:10px;padding:13px 16px;font-size:12px;line-height:1.6;color:#647b99}.privacy strong{color:#3b6298}.footer{border-top:1px solid #e0e6f2;color:#8190a6;text-align:center;padding:18px;font-size:12px}.footer a{text-decoration:none}.hide{display:none!important}
+    @media(max-width:1130px){.workspace{grid-template-columns:245px minmax(320px,1fr)}.preview-panel{grid-column:2}.bank-list{max-height:720px}}@media(max-width:740px){.container{padding:0 14px}.right-head{display:none}.workspace{grid-template-columns:1fr;gap:15px}.preview-panel{grid-column:auto}.head-inner{min-height:75px}.hero{padding:22px 0}.panel-header{padding:17px}.bank-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-height:220px;padding:0 9px 12px}.bank-choice{gap:6px;margin-right:3px;padding:8px 5px}.bank-symbol{width:27px;height:27px}.bank-text strong{font-size:11px}.bank-text small{font-size:9px}.panel form{padding:18px}.duo{grid-template-columns:1fr 1fr}.preview-stage{min-height:310px}}@media(max-width:420px){.duo,.advanced{grid-template-columns:1fr}.hero h1{font-size:27px}.bank-list{grid-template-columns:1fr 1fr}.logo-name{font-size:18px}.logo-name small{font-size:9px}.btn{font-size:12px;padding:0 10px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container head-inner">
+      <div class="logo"><div class="mark" aria-hidden="true">QR</div><div class="logo-name">VietQR Link Generator<small>TẠO LINK QR CHUYỂN KHOẢN NGÂN HÀNG</small></div></div>
+      <div class="right-head">Công cụ web tĩnh · Không yêu cầu đăng nhập</div>
+    </div>
+  </header>
+  <main class="container">
+    <section class="hero"><div class="eyebrow">● CÔNG CỤ TẠO LINK THANH TOÁN</div><h1>Tạo mã QR ngân hàng nhanh chóng</h1><p>Chọn ngân hàng, nhập thông tin chuyển khoản và tạo liên kết VietQR kèm ảnh xem trước.</p></section>
+    <section class="workspace" aria-label="Tạo mã VietQR">
+      <aside class="panel" aria-labelledby="bankHeading">
+        <div class="panel-header"><div><div class="panel-title" id="bankHeading">Ngân hàng</div><div class="panel-subtitle">Chọn ngân hàng nhận tiền</div></div><div class="mini-count" id="bankCount">Đang tải...</div></div>
+        <div class="bank-search"><div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 5 5"/></svg><input id="bankSearch" autocomplete="off" placeholder="Tìm tên hoặc mã ngân hàng..." aria-label="Tìm ngân hàng"></div></div>
+        <div id="bankList" class="bank-list" role="radiogroup" aria-label="Danh sách ngân hàng"></div>
+      </aside>
+      <section class="panel" aria-labelledby="formHeading">
+        <div class="panel-header"><div><div class="panel-title" id="formHeading">Thông tin chuyển khoản</div><div class="panel-subtitle">Điền thông tin theo tài khoản cần nhận tiền</div></div></div>
+        <form id="qrForm" novalidate>
+          <div class="selected-bank" id="chosenBank" aria-live="polite">Ngân hàng: Vietcombank</div>
+          <div class="field"><label for="accountNo">Số tài khoản (STK) <span class="required">*</span></label><input id="accountNo" inputmode="text" autocomplete="off" maxlength="19" placeholder="Nhập số tài khoản / alias" required></div>
+          <div class="field"><label for="accountName">Tên chủ tài khoản <span class="hint">Không bắt buộc</span></label><input id="accountName" autocomplete="off" maxlength="60" placeholder="Ví dụ: NGUYEN VAN A"></div>
+          <div class="duo">
+            <div class="field"><label for="amount">Số tiền <span class="hint">VND</span></label><div class="input-suffix"><input id="amount" inputmode="numeric" autocomplete="off" placeholder="500.000"><span class="suffix">₫</span></div><div class="mini-help" id="amountPreview">Để trống nếu không cố định số tiền</div></div>
+            <div class="field"><label for="template">Mẫu hiển thị</label><select id="template"><option value="compact2">Đầy đủ (compact2)</option><option value="compact">Gọn (compact)</option><option value="qr_only">Chỉ mã QR</option><option value="print">Bản in (print)</option><option value="custom" selected>Template tùy chỉnh</option></select></div>
+          </div>
+          <div class="field"><label for="addInfo">Nội dung chuyển khoản <span class="hint" id="memoCount">0/50</span></label><textarea id="addInfo" maxlength="50" placeholder="Ví dụ: Thanh toan don hang 123"></textarea><div class="mini-help">Khuyến nghị nhập tiếng Việt không dấu, không dùng ký tự đặc biệt.</div></div>
+          <div class="options">
+            <div class="advanced">
+              <div class="field"><label for="hostSelect">Máy chủ tạo ảnh</label><select id="hostSelect"><option value="img.vietqr.io" selected>img.vietqr.io (khuyên dùng)</option><option value="api.vietqr.io">api.vietqr.io (theo mẫu)</option></select></div>
+              <div class="field"><label for="imageType">Định dạng ảnh</label><select id="imageType"><option value="jpg">JPG</option><option value="png" selected>PNG</option><option value="svg">SVG</option></select></div>
+            </div>
+            <div class="field custom-field visible" id="customField"><label for="customTemplate">Mã template của bạn</label><input id="customTemplate" maxlength="36" value="7N4E6e2" placeholder="Ví dụ: 7N4E6e2"><div class="mini-help">Chỉ sử dụng mã template đã được VietQR cấp hoặc tạo riêng.</div></div>
+            <p id="validationError" class="err" role="alert"></p>
+            <div class="btn-row"><button class="btn primary" type="submit"><svg viewBox="0 0 24 24"><path d="M4 5h7v7H4zM14 5h6v6h-6zM4 15h7v5H4zM15 15h2M20 15v5h-5M15 18h2"/></svg>Tạo link và xem QR</button><button class="btn soft" id="exampleBtn" type="button" title="Điền mẫu từ link ví dụ được cung cấp">Điền ví dụ</button><button class="btn" id="clearBtn" type="button">Xóa</button></div>
+          </div>
+        </form>
+      </section>
+      <section class="panel preview-panel" aria-labelledby="previewHeading">
+        <div class="panel-header"><div><div class="panel-title" id="previewHeading">Xem trước mã QR</div><div class="panel-subtitle">Ảnh QR sẽ được tải từ VietQR</div></div><div class="mini-count" id="previewStatus">Chưa tạo</div></div>
+        <div class="preview-inner">
+          <div class="preview-stage" id="previewStage">
+            <div class="placeholder" id="previewPlaceholder"><svg class="qr-icon" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="4" aria-hidden="true"><rect x="4" y="4" width="23" height="23" rx="3"/><rect x="37" y="4" width="23" height="23" rx="3"/><rect x="4" y="37" width="23" height="23" rx="3"/><path d="M12 12h7v7h-7zM45 12h7v7h-7zM12 45h7v7h-7zM37 37h9m-9 9h9m8-9v9m-8 8h14m-7-6v12"/></svg><div class="placeholder-title">Chưa có mã QR</div><div class="placeholder-sub">Nhập số tài khoản và bấm “Tạo link và xem QR” để bắt đầu.</div></div>
+            <div class="loading">Đang tải ảnh QR từ VietQR...</div>
+            <img id="qrImage" class="qr-photo" alt="Ảnh mã VietQR chuyển khoản" referrerpolicy="no-referrer">
+          </div>
+          <div class="preview-badge"><span class="dot" aria-hidden="true"></span>Thông tin được gửi đến VietQR khi tải ảnh xem trước</div>
+          <div class="data-summary" id="summary" aria-live="polite"><div class="sumrow"><span>Ngân hàng</span><strong id="sumBank"></strong></div><div class="sumrow"><span>Số tài khoản</span><strong id="sumAcc"></strong></div><div class="sumrow"><span>Số tiền</span><strong id="sumAmount"></strong></div><div class="sumrow"><span>Nội dung</span><strong id="sumMemo"></strong></div></div>
+          <div class="link-label"><span>Đường dẫn ảnh QR</span><span class="hint">Có thể chia sẻ</span></div>
+          <textarea class="output-text" id="resultUrl" readonly placeholder="Link VietQR sẽ xuất hiện ở đây sau khi tạo mã..."></textarea>
+          <div class="action-row"><button type="button" class="btn soft" id="copyBtn" disabled><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg><span id="copyLabel">Copy link</span></button><button type="button" class="btn" id="openBtn" disabled><svg viewBox="0 0 24 24"><path d="M13 5h6v6M19 5l-9 9M19 13v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/></svg>Mở ảnh</button></div>
+          <p id="imageError" class="mini-help" style="display:none;color:#b42335" role="status"></p>
+        </div>
+      </section>
+    </section>
+    <div class="privacy"><strong>Thông tin & an toàn:</strong> Trang web này chạy bằng HTML/JavaScript tĩnh, không có cơ sở dữ liệu lưu thông tin tài khoản. Khi bạn tạo mã để xem trước, đường dẫn ảnh sẽ được tải từ máy chủ VietQR và chứa ngân hàng, số tài khoản và các trường bạn nhập. Hãy kiểm tra kỹ thông tin người nhận trong ứng dụng ngân hàng trước khi chuyển tiền. Công cụ không xác minh chủ tài khoản và không thực hiện giao dịch.</div>
+  </main>
+  <footer class="footer">VietQR Link Generator · Công cụ không chính thức · Tài liệu: <a href="https://www.vietqr.io/qr-dong" target="_blank" rel="noopener noreferrer">VietQR Quick Link</a></footer>
+  <script>
+    'use strict';
+    // Danh sách dự phòng; trang cố gắng tải thêm ngân hàng mới từ API VietQR.
+    const FALLBACK_BANKS = [
+      ['VCB','Vietcombank','970436'],['ICB','VietinBank','970415'],['BIDV','BIDV','970418'],['VBA','Agribank','970405'],
+      ['VPB','VPBank','970432'],['TCB','Techcombank','970407'],['MB','MBBank','970422'],['ACB','ACB','970416'],
+      ['TPB','TPBank','970423'],['STB','Sacombank','970403'],['HDB','HDBank','970437'],['VIB','VIB','970441'],
+      ['SHB','SHB','970443'],['EIB','Eximbank','970431'],['MSB','MSB','970426'],['OCB','OCB','970448'],
+      ['SCB','SCB','970429'],['SEAB','SeABank','970440'],['BAB','BacABank','970409'],['ABB','ABBANK','970425'],
+      ['NAB','NamABank','970428'],['NCB','NCB','970419'],['PVCB','PVcomBank','970412'],['SGB','SaigonBank','970400'],
+      ['BVB','BaoVietBank','970438'],['VAB','VietABank','970427'],['VBB','VietBank','970433'],['PGB','PGBank','970430'],
+      ['SHBVN','ShinhanBank','970424'],['UOB','UOB','970458'],['KLB','KienLongBank','970452'],['LPB','LPBank','970449'],
+      ['VCCB','VietCapitalBank','970454'],['CIMB','CIMB','422589'],['CAKE','CAKE by VPBank','546034'],
+      ['UBANK','Ubank by VPBank','546035'],['TIMO','Timo','963388'],['VTLMONEY','Viettel Money','971005'],
+      ['VNPTMONEY','VNPT Money','971011']
+    ].map(([code,name,bin])=>({code,name,bin}));
+    const PRIORITY=['VCB','ICB','BIDV','VBA','VPB','TCB','MB','ACB','TPB','STB','HDB','VIB','SHB','EIB','MSB','OCB','SCB','SEAB','BAB','ABB','NAB','NCB','PVCB','SGB','BVB','VAB','VBB','PGB','SHBVN','UOB','KLB','LPB','VCCB','CIMB','CAKE','UBANK','TIMO','VTLMONEY','VNPTMONEY'];
+    const $=id=>document.getElementById(id);
+    let bankData=FALLBACK_BANKS, selectedCode='VCB', lastUrl='';
+    const normalize=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase();
+    const bankSort=(a,b)=>{const i=PRIORITY.indexOf(a.code),j=PRIORITY.indexOf(b.code);return (i===-1?999:i)-(j===-1?999:j)||a.name.localeCompare(b.name,'vi')};
+    const findBank=()=>bankData.find(b=>b.code===selectedCode)||bankData[0];
+    function chooseBank(code){selectedCode=code;const bank=findBank();$('chosenBank').textContent='Ngân hàng nhận: '+bank.name+' · Mã '+bank.code+' · BIN '+(bank.bin||'—');renderBanks();}
+    function renderBanks(){
+      const list=$('bankList');list.replaceChildren();const query=normalize($('bankSearch').value.trim());
+      const filtered=bankData.filter(b=>normalize(`${b.name} ${b.code} ${b.bin}`).includes(query));$('bankCount').textContent=bankData.length+' ngân hàng';
+      if(!filtered.length){const no=document.createElement('div');no.className='no-match';no.textContent='Không tìm thấy ngân hàng phù hợp.';list.append(no);return;}
+      const frag=document.createDocumentFragment();
+      for(const bank of filtered){
+        const label=document.createElement('label');label.className='bank-choice';label.title=bank.name+' • '+bank.code+' • '+bank.bin;
+        const radio=document.createElement('input');radio.type='radio';radio.name='bank';radio.value=bank.code;radio.checked=bank.code===selectedCode;radio.addEventListener('change',()=>chooseBank(bank.code));
+        const symbol=document.createElement('span');symbol.className='bank-symbol';symbol.textContent=bank.code.substring(0,3);
+        const info=document.createElement('span');info.className='bank-text';const strong=document.createElement('strong');strong.textContent=bank.name;
+        const small=document.createElement('small');small.textContent=`${bank.code} · ${bank.bin||'—'}`;info.append(strong,small);label.append(radio,symbol,info);frag.append(label);
+      } list.append(frag);
+    }
+    async function refreshBanks(){
+      try {
+        const res=await fetch('https://api.vietqr.io/v2/banks',{method:'GET',mode:'cors',cache:'no-store'});
+        if(!res.ok)throw new Error('API HTTP '+res.status);
+        const body=await res.json();if(!Array.isArray(body.data)||body.data.length<15)throw new Error('Invalid bank list');
+        const fresh=body.data.filter(b=>/^[A-Za-z0-9_]+$/.test(b.code||'')&&/^\d{6}$/.test(String(b.bin||''))).map(b=>({code:b.code,name:b.shortName||b.name||b.code,bin:String(b.bin)}));
+        const byCode=new Map(FALLBACK_BANKS.map(b=>[b.code,b]));for(const b of fresh)byCode.set(b.code,b);
+        bankData=[...byCode.values()].sort(bankSort);renderBanks();chooseBank(selectedCode);
+      }catch(err){console.info('Danh sách ngân hàng dự phòng đang được sử dụng:',err.message);}
+    }
+    function formatAmount(raw){return raw.replace(/[^0-9]/g,'').replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
+    function amountDigits(){return $('amount').value.replace(/[^0-9]/g,'');}
+    function validate(){
+      const no=$('accountNo').value.trim().replace(/\s/g,'').toUpperCase();
+      if(!/^[A-Z0-9]{1,19}$/.test(no))return {error:'Số tài khoản / alias phải gồm 1–19 chữ hoặc số, không có khoảng trắng hoặc ký tự đặc biệt.'};
+      const amt=amountDigits();if(amt&&(!/^[0-9]{1,13}$/.test(amt)||!/[1-9]/.test(amt)))return {error:'Số tiền phải lớn hơn 0 và không quá 13 chữ số.'};
+      const memo=$('addInfo').value.trim();if(memo.length>50)return {error:'Nội dung chuyển khoản không quá 50 ký tự.'};
+      const chosen=$('template').value;
+      const tpl=chosen==='custom' ? $('customTemplate').value.trim() : chosen;
+      if(!/^[A-Za-z0-9_]{1,36}$/.test(tpl))return {error:'Mã template không hợp lệ (chỉ chứa chữ, số hoặc dấu gạch dưới).'};
+      return {bank:findBank(),no,amt,memo,name:$('accountName').value.trim(),tpl};
+    }
+    function buildUrl(data){
+      const host=$('hostSelect').value;
+      const ext=$('imageType').value;
+      const url=new URL(`https://${host}/image/${data.bank.code}-${data.no}-${data.tpl}.${ext}`);
+      // Mã hóa các trường query bằng URLSearchParams để bảo toàn tiếng Việt và dấu cách.
+      if(data.amt)url.searchParams.set('amount',data.amt);
+      if(data.memo)url.searchParams.set('addInfo',data.memo);
+      if(data.name)url.searchParams.set('accountName',data.name);
+      return url.toString().replace(/\+/g,'%20');
+    }
+    function showError(msg){const el=$('validationError');el.textContent=msg;el.classList.add('show');}
+    function clearError(){$('validationError').classList.remove('show');$('validationError').textContent='';}
+    function renderImage(data){
+      const newUrl=buildUrl(data);lastUrl=newUrl;$('resultUrl').value=newUrl;$('copyBtn').disabled=false;$('openBtn').disabled=false;$('copyLabel').textContent='Copy link';
+      $('sumBank').textContent=data.bank.name;$('sumAcc').textContent=data.no;$('sumAmount').textContent=data.amt?Number(data.amt).toLocaleString('vi-VN')+' ₫':'Không cố định';$('sumMemo').textContent=data.memo||'—';$('summary').classList.add('active');
+      const stage=$('previewStage');stage.classList.remove('loaded');stage.classList.add('is-loading');$('previewStatus').textContent='Đang tải';$('imageError').style.display='none';
+      const image=$('qrImage');image.removeAttribute('src');image.src=newUrl;
+    }
+    $('qrImage').addEventListener('load',()=>{$('previewStage').classList.remove('is-loading');$('previewStage').classList.add('loaded');$('previewStatus').textContent='Đã tạo';});
+    $('qrImage').addEventListener('error',()=>{$('previewStage').classList.remove('is-loading','loaded');$('previewStatus').textContent='Không tải được ảnh';$('imageError').textContent='Không tải được ảnh từ VietQR. Kiểm tra mã template, STK hoặc đổi máy chủ về img.vietqr.io, rồi tạo lại. Bạn vẫn có thể mở link để kiểm tra trực tiếp.';$('imageError').style.display='block';$('previewPlaceholder').querySelector('.placeholder-title').textContent='Không tải được ảnh QR';$('previewPlaceholder').querySelector('.placeholder-sub').textContent='Kiểm tra link hoặc thử template compact2 trên img.vietqr.io.';});
+    $('qrForm').addEventListener('submit',e=>{e.preventDefault();clearError();const data=validate();if(data.error){showError(data.error);return;}renderImage(data);});
+    $('bankSearch').addEventListener('input',renderBanks);
+    $('amount').addEventListener('input',()=>{const digits=amountDigits();$('amount').value=formatAmount(digits);$('amountPreview').textContent=digits?Number(digits).toLocaleString('vi-VN')+' VND':'Để trống nếu không cố định số tiền';});
+    $('addInfo').addEventListener('input',()=>{$('memoCount').textContent=$('addInfo').value.length+'/50';});
+    $('template').addEventListener('change',()=>{$('customField').classList.toggle('visible',$('template').value==='custom');});
+    $('exampleBtn').addEventListener('click',()=>{
+      chooseBank('VBA');$('accountNo').value='7303205153070';$('amount').value='50.000.000';$('amountPreview').textContent='50.000.000 VND';$('addInfo').value='Anh Duong Tam';$('memoCount').textContent='13/50';$('accountName').value='ĐOAN THI LOAN';
+      $('template').value='custom';$('customField').classList.add('visible');$('customTemplate').value='7N4E6e2';$('hostSelect').value='api.vietqr.io';$('imageType').value='jpg';clearError();
+    });
+    $('clearBtn').addEventListener('click',()=>{
+      $('qrForm').reset();chooseBank('VCB');$('bankSearch').value='';renderBanks();$('customField').classList.toggle('visible',$('template').value==='custom');$('amountPreview').textContent='Để trống nếu không cố định số tiền';$('memoCount').textContent='0/50';$('resultUrl').value='';$('summary').classList.remove('active');$('qrImage').removeAttribute('src');$('previewStage').classList.remove('is-loading','loaded');$('previewPlaceholder').querySelector('.placeholder-title').textContent='Chưa có mã QR';$('previewPlaceholder').querySelector('.placeholder-sub').textContent='Nhập số tài khoản và bấm “Tạo link và xem QR” để bắt đầu.';$('previewStatus').textContent='Chưa tạo';$('imageError').style.display='none';$('copyBtn').disabled=true;$('openBtn').disabled=true;lastUrl='';clearError();
+    });
+    $('copyBtn').addEventListener('click',async()=>{
+      if(!lastUrl)return;
+      try{await navigator.clipboard.writeText(lastUrl);}catch(err){$('resultUrl').select();const ok=document.execCommand('copy');if(!ok){showError('Không thể tự sao chép. Hãy chọn đường dẫn và nhấn Ctrl+C.');return;}}
+      $('copyLabel').textContent='Đã sao chép!';setTimeout(()=>{$('copyLabel').textContent='Copy link';},2300);
+    });
+    $('openBtn').addEventListener('click',()=>{if(lastUrl)window.open(lastUrl,'_blank','noopener,noreferrer');});
+    // Apply the display settings shown in the default form on each fresh page load.
+    // Amount and transfer note deliberately remain empty: their examples are placeholders.
+    $('amount').value='';
+    $('addInfo').value='';
+    $('template').value='custom';
+    $('hostSelect').value='img.vietqr.io';
+    $('imageType').value='png';
+    $('customTemplate').value='7N4E6e2';
+    $('customField').classList.add('visible');
+    bankData.sort(bankSort);chooseBank('VCB');refreshBanks();
+  </script>
+</body>
+</html>
