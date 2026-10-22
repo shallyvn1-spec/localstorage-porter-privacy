@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Công cụ quy đổi CNY, USD và VND, lưu tỷ giá trong trình duyệt.">
+  <title>Công cụ quy đổi tiền tệ</title>
+
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+    crossorigin="anonymous"
+  >
+
+  <style>
+    :root {
+      --page-bg-start: #f8fafc;
+      --page-bg-end: #eef2ff;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--page-bg-start), var(--page-bg-end));
+    }
+
+    .app-shell {
+      max-width: 1100px;
+    }
+
+    .currency-card {
+      border: 0;
+      border-radius: 1rem;
+      box-shadow: 0 0.75rem 2rem rgba(15, 23, 42, 0.08);
+    }
+
+    .currency-symbol {
+      width: 3rem;
+      height: 3rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+
+    .rate-saved {
+      min-height: 1.25rem;
+    }
+
+    .form-control:disabled {
+      color: #0f172a;
+      background-color: #f1f5f9;
+      opacity: 1;
+      font-weight: 600;
+    }
+
+    .input-group-text {
+      min-width: 4.75rem;
+      justify-content: center;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <main class="container app-shell py-4 py-lg-5">
+    <header class="text-center mb-4 mb-lg-5">
+      <h1 class="fw-bold mb-2">Công cụ quy đổi tiền tệ</h1>
+      <p class="text-secondary mb-0">
+        Quy đổi CNY ⇄ VND và USD ⇄ VND. Tỷ giá được tự động lưu trên trình duyệt.
+      </p>
+    </header>
+
+    <div class="row g-4">
+      <!-- CNY / VND -->
+      <section class="col-12 col-lg-6">
+        <div class="card currency-card h-100">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-center gap-3 mb-4">
+              <span class="currency-symbol bg-danger-subtle text-danger">¥</span>
+              <div>
+                <h2 class="h4 mb-1">Nhân dân tệ / Việt Nam đồng</h2>
+                <div class="text-secondary small">CNY ⇄ VND</div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="cnyRate" class="form-label fw-semibold">Tỷ giá CNY</label>
+              <div class="input-group">
+                <span class="input-group-text">1 CNY</span>
+                <input
+                  id="cnyRate"
+                  class="form-control"
+                  type="text"
+                  inputmode="decimal"
+                  autocomplete="off"
+                  placeholder="Ví dụ: 3.870,5"
+                  aria-describedby="cnyRateHelp"
+                >
+                <span class="input-group-text">VND</span>
+              </div>
+              <div id="cnyRateHelp" class="form-text rate-saved">
+                <span id="cnySaveStatus">Nhập tỷ giá để bắt đầu quy đổi.</span>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="vndToCnyInput" class="form-label fw-semibold">Đổi VND sang CNY</label>
+              <div class="input-group mb-2">
+                <input
+                  id="vndToCnyInput"
+                  class="form-control"
+                  type="text"
+                  inputmode="decimal"
+                  autocomplete="off"
+                  placeholder="Nhập số tiền VND"
+                >
+                <span class="input-group-text">VND</span>
+              </div>
+              <div class="input-group">
+                <input
+                  id="vndToCnyOutput"
+                  class="form-control"
+                  type="text"
+                  placeholder="Kết quả"
+                  disabled
+                >
+                <span class="input-group-text">CNY</span>
+              </div>
+            </div>
+
+            <div>
+              <label for="cnyToVndInput" class="form-label fw-semibold">Đổi CNY sang VND</label>
+              <div class="input-group mb-2">
+                <input
+                  id="cnyToVndInput"
+                  class="form-control"
+                  type="text"
+                  inputmode="decimal"
+                  autocomplete="off"
+                  placeholder="Nhập số tiền CNY"
+                >
+                <span class="input-group-text">CNY</span>
+              </div>
+              <div class="input-group">
+                <input
+                  id="cnyToVndOutput"
+                  class="form-control"
+                  type="text"
+                  placeholder="Kết quả"
+                  disabled
+                >
+                <span class="input-group-text">VND</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- USD / VND -->
+      <section class="col-12 col-lg-6">
+        <div class="card currency-card h-100">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-center gap-3 mb-4">
+              <span class="currency-symbol bg-success-subtle text-success">$</span>
+              <div>
+                <h2 class="h4 mb-1">Đô la Mỹ / Việt Nam đồng</h2>
+                <div class="text-secondary small">USD ⇄ VND</div>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="usdRate" class="form-label fw-semibold">Tỷ giá USD</label>
+              <div class="input-group">
+                <span class="input-group-text">1 USD</span>
+                <input
+                  id="usdRate"
+                  class="form-control"
+                  type="text"
+                  inputmode="decimal"
+                  autocomplete="off"
+                  placeholder="Ví dụ: 26.000"
+                  aria-describedby="usdRateHelp"
+                >
+                <span class="input-group-text">VND</span>
+              </div>
+              <div id="usdRateHelp" class="form-text rate-saved">
+                <span id="usdSaveStatus">Nhập tỷ giá để bắt đầu quy đổi.</span>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="vndToUsdInput" class="form-label fw-semibold">Đổi VND sang USD</label>
+              <div class="input-group mb-2">
+                <input
+                  id="vndToUsdInput"
+                  class="form-control"
+                  type="text"
+                  inputmode="decimal"
+                  autocomplete="off"
+                  placeholder="Nhập số tiền VND"
+                >
+                <span class="input-group-text">VND</span>
+              </div>
+              <div class="input-group">
+                <input
+                  id="vndToUsdOutput"
+                  class="form-control"
+                  type="text"
+                  placeholder="Kết quả"
+                  disabled
+                >
+                <span class="input-group-text">USD</span>
+              </div>
+            </div>
+
+            <div>
+              <label for="usdToVndInput" class="form-label fw-semibold">Đổi USD sang VND</label>
+              <div class="input-group mb-2">
+                <input
+                  id="usdToVndInput"
+                  class="form-control"
+                  type="text"
+                  inputmode="decimal"
+                  autocomplete="off"
+                  placeholder="Nhập số tiền USD"
+                >
+                <span class="input-group-text">USD</span>
+              </div>
+              <div class="input-group">
+                <input
+                  id="usdToVndOutput"
+                  class="form-control"
+                  type="text"
+                  placeholder="Kết quả"
+                  disabled
+                >
+                <span class="input-group-text">VND</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer class="text-center text-secondary small mt-4">
+      Dữ liệu tỷ giá chỉ được lưu trong <code>localStorage</code> của trình duyệt hiện tại.
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const STORAGE_KEYS = {
+        cnyRate: 'currency_converter_cny_rate',
+        usdRate: 'currency_converter_usd_rate'
+      };
+
+      const numberFormatters = {
+        VND: new Intl.NumberFormat('vi-VN', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 0
+        }),
+        CNY: new Intl.NumberFormat('vi-VN', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2
+        }),
+        USD: new Intl.NumberFormat('vi-VN', {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2
+        })
+      };
+
+      /**
+       * Đọc số đã được định dạng theo kiểu Việt Nam:
+       * - Dấu chấm phân cách hàng nghìn: 1.234.567
+       * - Dấu phẩy phân cách phần thập phân: 1.234,5678
+       *
+       * Dữ liệu luôn được format trước khi gọi hàm này, vì vậy cách đọc
+       * không bị nhầm giữa dấu phân cách hàng nghìn và dấu thập phân.
+       */
+      function parseFlexibleNumber(rawValue) {
+        if (typeof rawValue !== 'string') return NaN;
+
+        let value = rawValue.trim().replace(/\s+/g, '');
+        if (!value) return NaN;
+
+        value = value
+          .replace(/[^0-9,.-]/g, '')
+          .replace(/\./g, '')
+          .replace(',', '.');
+
+        const parsed = Number(value);
+        return Number.isFinite(parsed) ? parsed : NaN;
+      }
+
+      function formatNumber(value, currency, maximumFractionDigits = null) {
+        if (!Number.isFinite(value)) return '';
+
+        if (Number.isInteger(maximumFractionDigits) && maximumFractionDigits >= 0) {
+          return new Intl.NumberFormat('vi-VN', {
+            minimumFractionDigits: 0,
+            maximumFractionDigits
+          }).format(value);
+        }
+
+        return numberFormatters[currency].format(value);
+      }
+
+      /**
+       * Format trực tiếp số tiền đang nhập theo kiểu Việt Nam:
+       * - Hàng nghìn dùng dấu chấm: 1000000 → 1.000.000
+       * - Phần thập phân dùng dấu phẩy: 1234.5 → 1.234,5
+       *
+       * Lưu ý quan trọng:
+       * Khi input đã được format thành 1.300 và người dùng gõ tiếp số 0,
+       * trình duyệt sẽ đưa chuỗi hiện tại thành 1.3000. Hàm này phải hiểu
+       * dấu chấm đó là phân tách hàng nghìn, không phải dấu thập phân.
+       */
+      function formatEditableAmount(input, allowDecimals = false, maximumFractionDigits = 2, event = null) {
+        const rawValue = input.value.trim();
+
+        if (!rawValue) {
+          input.value = '';
+          delete input.dataset.decimalSeparator;
+          return;
+        }
+
+        const cleaned = rawValue.replace(/[^0-9.,]/g, '');
+        if (!cleaned) {
+          input.value = '';
+          delete input.dataset.decimalSeparator;
+          return;
+        }
+
+        let integerText = cleaned;
+        let decimalText = '';
+        let hasDecimalSeparator = false;
+
+        if (allowDecimals) {
+          const typedSeparator = event && (event.data === ',' || event.data === '.')
+            ? event.data
+            : '';
+
+          // Dấu phẩy là dấu thập phân chuẩn theo vi-VN.
+          // Nếu người dùng vừa gõ dấu chấm, vẫn cho phép dùng dấu chấm làm thập phân
+          // và hiển thị lại thành dấu phẩy.
+          if (cleaned.includes(',')) {
+            input.dataset.decimalSeparator = ',';
+          } else if (typedSeparator) {
+            input.dataset.decimalSeparator = typedSeparator;
+          }
+
+          const commaCount = (cleaned.match(/,/g) || []).length;
+          const dotCount = (cleaned.match(/\./g) || []).length;
+          const lastComma = cleaned.lastIndexOf(',');
+          const lastDot = cleaned.lastIndexOf('.');
+          const savedDecimalSeparator = input.dataset.decimalSeparator || '';
+
+          let decimalIndex = -1;
+
+          if (commaCount > 0) {
+            decimalIndex = lastComma;
+          } else if (dotCount > 0 && savedDecimalSeparator === '.') {
+            decimalIndex = lastDot;
+          } else if (dotCount > 0 && (!event || event.inputType === 'insertFromPaste')) {
+            const digitsAfter = cleaned.length - lastDot - 1;
+
+            // Chỉ suy đoán dấu chấm là dấu thập phân khi người dùng paste/gán sẵn giá trị.
+            // Khi đang gõ liên tục, dấu chấm thường là dấu format hàng nghìn đã có sẵn.
+            if (dotCount === 1 && digitsAfter > 0 && digitsAfter <= maximumFractionDigits && digitsAfter !== 3) {
+              decimalIndex = lastDot;
+              input.dataset.decimalSeparator = '.';
+            }
+          }
+
+          if (decimalIndex >= 0) {
+            hasDecimalSeparator = true;
+            integerText = cleaned.slice(0, decimalIndex);
+            decimalText = cleaned
+              .slice(decimalIndex + 1)
+              .replace(/[^0-9]/g, '')
+              .slice(0, maximumFractionDigits);
+          } else {
+            delete input.dataset.decimalSeparator;
+          }
+        }
+
+        const integerDigits = integerText.replace(/[^0-9]/g, '');
+        const normalizedInteger = integerDigits.replace(/^0+(?=\d)/, '') || '0';
+        const formattedInteger = Number(normalizedInteger).toLocaleString('vi-VN');
+
+        input.value = allowDecimals && hasDecimalSeparator
+          ? `${formattedInteger},${decimalText}`
+          : formattedInteger;
+
+        // Việc format lại có thể làm thay đổi độ dài chuỗi; đưa con trỏ về cuối
+        // để thao tác nhập liên tục tự nhiên trên cả desktop và mobile.
+        const caretPosition = input.value.length;
+        input.setSelectionRange(caretPosition, caretPosition);
+      }
+
+      function setOutput(element, value, currency, maximumFractionDigits = null) {
+        element.value = Number.isFinite(value)
+          ? formatNumber(value, currency, maximumFractionDigits)
+          : '';
+      }
+
+      function createCurrencyConverter(config) {
+        const rateInput = document.getElementById(config.rateInputId);
+        const saveStatus = document.getElementById(config.saveStatusId);
+        const vndInput = document.getElementById(config.vndInputId);
+        const foreignOutput = document.getElementById(config.foreignOutputId);
+        const foreignInput = document.getElementById(config.foreignInputId);
+        const vndOutput = document.getElementById(config.vndOutputId);
+
+        function getRate() {
+          const rate = parseFlexibleNumber(rateInput.value);
+          return rate > 0 ? rate : NaN;
+        }
+
+        function calculate() {
+          const rate = getRate();
+          const vndAmount = parseFlexibleNumber(vndInput.value);
+          const foreignAmount = parseFlexibleNumber(foreignInput.value);
+
+          setOutput(
+            foreignOutput,
+            Number.isFinite(rate) && Number.isFinite(vndAmount)
+              ? vndAmount / rate
+              : NaN,
+            config.foreignCurrency,
+            config.foreignOutputMaximumFractionDigits
+          );
+
+          setOutput(
+            vndOutput,
+            Number.isFinite(rate) && Number.isFinite(foreignAmount)
+              ? foreignAmount * rate
+              : NaN,
+            'VND',
+            config.vndOutputMaximumFractionDigits
+          );
+        }
+
+        function saveRate() {
+          const rate = getRate();
+
+          if (Number.isFinite(rate)) {
+            localStorage.setItem(config.storageKey, String(rate));
+            saveStatus.textContent = `Đã tự động lưu: 1 ${config.foreignCurrency} = ${formatNumber(rate, 'VND', config.rateMaximumFractionDigits)} VND`;
+            saveStatus.className = 'text-success';
+          } else {
+            localStorage.removeItem(config.storageKey);
+            saveStatus.textContent = 'Tỷ giá không hợp lệ hoặc đã bị xóa.';
+            saveStatus.className = 'text-danger';
+          }
+
+          calculate();
+        }
+
+        function restoreRate() {
+          const savedRate = Number(localStorage.getItem(config.storageKey));
+
+          if (Number.isFinite(savedRate) && savedRate > 0) {
+            rateInput.value = formatNumber(savedRate, 'VND', config.rateMaximumFractionDigits);
+            saveStatus.textContent = `Đã tải tỷ giá đã lưu: 1 ${config.foreignCurrency} = ${formatNumber(savedRate, 'VND', config.rateMaximumFractionDigits)} VND`;
+            saveStatus.className = 'text-success';
+          }
+        }
+
+        rateInput.addEventListener('input', (event) => {
+          formatEditableAmount(
+            rateInput,
+            config.rateAllowDecimals,
+            config.rateMaximumFractionDigits,
+            event
+          );
+          saveRate();
+        });
+
+        vndInput.addEventListener('input', (event) => {
+          formatEditableAmount(
+            vndInput,
+            config.vndInputAllowDecimals,
+            config.vndInputMaximumFractionDigits,
+            event
+          );
+          calculate();
+        });
+
+        foreignInput.addEventListener('input', (event) => {
+          formatEditableAmount(
+            foreignInput,
+            true,
+            config.foreignInputMaximumFractionDigits,
+            event
+          );
+          calculate();
+        });
+
+        rateInput.addEventListener('blur', () => {
+          const rate = getRate();
+          if (Number.isFinite(rate)) {
+            rateInput.value = formatNumber(
+              rate,
+              'VND',
+              config.rateMaximumFractionDigits
+            );
+          }
+        });
+
+        restoreRate();
+        calculate();
+      }
+
+      createCurrencyConverter({
+        foreignCurrency: 'CNY',
+        storageKey: STORAGE_KEYS.cnyRate,
+        rateAllowDecimals: true,
+        rateMaximumFractionDigits: 4,
+        vndInputAllowDecimals: true,
+        vndInputMaximumFractionDigits: 4,
+        foreignInputMaximumFractionDigits: 4,
+        foreignOutputMaximumFractionDigits: 4,
+        vndOutputMaximumFractionDigits: 4,
+        rateInputId: 'cnyRate',
+        saveStatusId: 'cnySaveStatus',
+        vndInputId: 'vndToCnyInput',
+        foreignOutputId: 'vndToCnyOutput',
+        foreignInputId: 'cnyToVndInput',
+        vndOutputId: 'cnyToVndOutput'
+      });
+
+      createCurrencyConverter({
+        foreignCurrency: 'USD',
+        storageKey: STORAGE_KEYS.usdRate,
+        rateAllowDecimals: false,
+        rateMaximumFractionDigits: 0,
+        vndInputAllowDecimals: false,
+        vndInputMaximumFractionDigits: 0,
+        foreignInputMaximumFractionDigits: 2,
+        foreignOutputMaximumFractionDigits: 2,
+        vndOutputMaximumFractionDigits: 0,
+        rateInputId: 'usdRate',
+        saveStatusId: 'usdSaveStatus',
+        vndInputId: 'vndToUsdInput',
+        foreignOutputId: 'vndToUsdOutput',
+        foreignInputId: 'usdToVndInput',
+        vndOutputId: 'usdToVndOutput'
+      });
+    })();
+  </script>
+</body>
+</html>
