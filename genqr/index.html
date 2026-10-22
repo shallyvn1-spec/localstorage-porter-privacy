@@ -245,7 +245,7 @@
     function removeHistory(id){
       const item=qrHistory.find(row=>row.id===id);
       if(!item)return;
-      if(!window.confirm('Xóa lịch sử QR của '+(safeText(item.bankName,100)||'ngân hàng')+' - '+safeText(item.accountNo,19)+'?'))return;
+      // if(!window.confirm('Xóa lịch sử QR của '+(safeText(item.bankName,100)||'ngân hàng')+' - '+safeText(item.accountNo,19)+'?'))return;
       const next=qrHistory.filter(row=>row.id!==id);
       if(persistHistory(next)){qrHistory=next;renderHistory();}
     }
