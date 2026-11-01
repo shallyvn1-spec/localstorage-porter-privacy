@@ -1,100 +1,360 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light">
-  <meta name="description" content="Chính sách quyền riêng tư của tiện ích Chrome LocalStorage Porter – Privacy Policy for LocalStorage Porter Chrome Extension.">
-  <title>Privacy Policy | LocalStorage Porter</title>
+  <meta name="color-scheme" content="light dark">
+  <meta name="description" content="Sproxy Tools — bộ công cụ web miễn phí: tạo QR ngân hàng VietQR, quy đổi tiền tệ và soạn thảo ghi chú, tập trung trong một trang chủ.">
+  <meta name="theme-color" content="#f5f7fc">
+  <title>Sproxy Tools — Công cụ tiện ích</title>
   <style>
-    :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#17233b;background:#f5f8ff;font-size:16px}
-    *{box-sizing:border-box}
-    body{margin:0;line-height:1.7}
-    .banner{background:linear-gradient(125deg,#0e2867,#225fe8 65%,#765af2);color:white;padding:48px 20px 56px}
-    .wrap{max-width:900px;margin:0 auto}
-    .brand{display:flex;gap:14px;align-items:center;margin-bottom:20px}
-    .logo{display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:linear-gradient(145deg,#488aff,#8954e8);box-shadow:0 5px 18px #092c793d;font-weight:800;font-size:22px;color:#fff}
-    .brandname{font-weight:750;font-size:20px;letter-spacing:-.4px}
-    h1{font-size:clamp(28px,4.3vw,43px);margin:0 0 9px;line-height:1.2;letter-spacing:-1px}
-    .lead{color:#e5ecff;max-width:650px;margin:0 0 14px}
-    .updated{display:inline-block;background:#ffffff25;border:1px solid #ffffff44;padding:5px 12px;border-radius:999px;font-size:13px}
-    main{margin:-25px auto 50px;padding:0 18px;position:relative}
-    article{background:#fff;border:1px solid #dde5f3;border-radius:18px;box-shadow:0 12px 36px #15336612;padding:clamp(22px,5vw,42px)}
-    nav{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;border-bottom:1px solid #e9edf6;padding-bottom:22px}
-    nav a{display:inline-flex;padding:7px 13px;border-radius:9px;border:1px solid #dbe5f7;text-decoration:none;color:#2057bd;font-weight:650;background:#f7faff}
-    nav a:hover{background:#eaf1ff}
-    h2{font-size:23px;margin:34px 0 8px;letter-spacing:-.5px;color:#153b88}
-    h3{font-size:18px;margin:24px 0 6px;color:#1b3d72}
-    p{margin:10px 0}
-    ul{padding-left:24px;margin:8px 0 18px}
-    li{margin:5px 0}
-    section+section{border-top:1px solid #e6ebf4;margin-top:32px;padding-top:8px}
-    .notice{background:#eff5ff;border-left:4px solid #396bf1;padding:12px 17px;border-radius:0 8px 8px 0}
-    .muted{color:#52617c}
-    footer{text-align:center;color:#5a6780;font-size:13px;padding:8px 18px 28px}
-    @media (max-width:520px){.banner{padding:32px 18px 52px}.brandname{font-size:17px}article{border-radius:14px}nav{gap:6px}}
+    :root {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color-scheme: light;
+      --ink: #18233b;
+      --muted: #75819b;
+      --bg: #f5f7fc;
+      --surface: #fff;
+      --border: #e7eaf3;
+      --shadow: 0 14px 45px rgba(29, 55, 108, .055);
+      --blue: #3c66e8;
+      --soft-blue: #eef3ff;
+      --pill: #f0f3fa;
+      --pill-text: #63718d;
+      --hero1: #101c43;
+      --hero2: #263f90;
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --ink: #f2f5fd;
+      --muted: #a7b2ce;
+      --bg: #101525;
+      --surface: #191f32;
+      --border: #313b56;
+      --shadow: 0 14px 44px rgba(0, 0, 0, .14);
+      --blue: #89a3ff;
+      --soft-blue: #222e53;
+      --pill: #242d44;
+      --pill-text: #a2b0cc;
+      --hero1: #17244e;
+      --hero2: #263e82;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; min-width: 320px; background: var(--bg); color: var(--ink); transition: background .2s, color .2s; }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
+    button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid #84a9ff; outline-offset: 3px; }
+    .container { width: min(1170px, calc(100% - 48px)); margin-inline: auto; }
+    .topbar { height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; }
+    .logo { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 14px; color: #fff; background: linear-gradient(140deg, #3d6eec 10%, #7662e7 95%); box-shadow: 0 9px 19px #5274e630; }
+    .logo svg { width: 22px; height: 22px; }
+    .brand strong { font-size: 17px; font-weight: 800; letter-spacing: -.45px; display: block; }
+    .brand small { font-size: 10px; font-weight: 800; color: #7c8ba8; letter-spacing: 1.4px; display: block; margin-top: 3px; }
+    .nav { display: flex; align-items: center; gap: 31px; margin-left: auto; }
+    .nav a { font-size: 13px; font-weight: 650; color: var(--muted); transition: color .15s; }
+    .nav a:hover { color: var(--blue); }
+    .theme-toggle { border: 1px solid var(--border); color: var(--ink); background: var(--surface); width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; margin-left: 12px; }
+    .theme-toggle svg { width: 19px; height: 19px; }
+    .theme-toggle:hover { background: var(--soft-blue); }
+
+    .hero { position: relative; isolation: isolate; overflow: hidden; margin-top: 10px; min-height: 340px; border-radius: 26px; background: linear-gradient(119deg, var(--hero1), var(--hero2)); color: white; padding: 48px 58px 46px; box-shadow: 0 18px 35px rgba(29, 54, 114, .10); }
+    .hero:before, .hero:after { content: ""; position: absolute; z-index: -1; pointer-events: none; border-radius: 50%; }
+    .hero:before { width: 540px; height: 540px; right: -145px; top: -245px; background: radial-gradient(circle at 35% 65%, rgba(128, 157, 255, .39), rgba(122, 92, 213, .08) 62%, transparent 73%); }
+    .hero:after { width: 395px; height: 395px; right: 80px; bottom: -340px; border: 1px solid #ffffff36; box-shadow: 0 0 0 70px #ffffff09, 0 0 0 140px #ffffff06; }
+    .eyebrow { display: inline-flex; gap: 8px; align-items: center; background: #ffffff19; border: 1px solid #ffffff22; padding: 7px 11px; border-radius: 20px; font-size: 10px; font-weight: 800; letter-spacing: 1.7px; }
+    .eyebrow i { height: 6px; width: 6px; border-radius: 50%; background: #a1bcff; }
+    .hero h1 { font-size: clamp(32px, 4vw, 49px); line-height: 1.16; max-width: 640px; margin: 19px 0 14px; letter-spacing: -1.7px; }
+    .hero p { color: #cad6f6; line-height: 1.8; font-size: 14px; max-width: 610px; margin: 0; }
+    .hero p strong { color: #fff; }
+    .search { display: flex; align-items: center; gap: 12px; margin-top: 27px; width: min(565px, 100%); height: 54px; background: #fff; padding: 0 12px 0 17px; border-radius: 12px; color: #6f7c99; box-shadow: 0 10px 30px #00123530; }
+    .search svg { width: 18px; height: 18px; flex: none; }
+    .search input { border: 0; outline: none; box-shadow: none; width: 100%; min-width: 0; color: #1a2745; background: transparent; font-size: 13px; }
+    .search input::placeholder { color: #929db2; }
+    .shortcut { color: #8895ad; border: 1px solid #e4e8f0; background: #f6f7fa; padding: 5px 7px; border-radius: 6px; white-space: nowrap; font-size: 10px; }
+    .hero-deco { position: absolute; right: 92px; top: 87px; width: 212px; height: 185px; opacity: .9; pointer-events: none; }
+    .hero-deco .tile { position: absolute; display: grid; place-items: center; background: #ffffff21; color: white; border: 1px solid #ffffff35; border-radius: 17px; box-shadow: 0 14px 42px #09183e40; backdrop-filter: blur(8px); }
+    .hero-deco .tile svg { width: 31px; height: 31px; }
+    .hero-deco .t1 { width: 85px; height: 85px; left: 8px; top: 12px; transform: rotate(-12deg); }
+    .hero-deco .t2 { width: 90px; height: 90px; left: 115px; top: 51px; transform: rotate(11deg); }
+    .hero-deco .t3 { width: 75px; height: 75px; left: 44px; top: 116px; transform: rotate(6deg); }
+
+    .workspace { padding-top: 44px; min-height: 390px; }
+    .section-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; margin-bottom: 23px; }
+    .section-heading .kicker { text-transform: uppercase; color: var(--blue); font-size: 10px; letter-spacing: 1.6px; font-weight: 850; margin: 0 0 8px; }
+    .section-heading h2 { font-size: 24px; letter-spacing: -.85px; margin: 0; }
+    .tool-count { font-size: 12px; color: var(--muted); padding-bottom: 3px; }
+    .filterbar { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 19px; }
+    .filters { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .chip { padding: 9px 15px; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; color: var(--muted); font-size: 12px; font-weight: 700; transition: background .17s, color .17s; }
+    .chip:hover { border-color: #c5d4ff; color: var(--blue); }
+    .chip.active { color: white; border-color: #4269df; background: #4269df; box-shadow: 0 6px 16px #4269df30; }
+    .fav-filter { display: inline-flex; align-items: center; gap: 7px; }
+    .fav-filter svg { width: 14px; height: 14px; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 19px; padding: 24px 24px 21px; min-height: 260px; box-shadow: var(--shadow); display: flex; flex-direction: column; position: relative; transition: border-color .16s, transform .16s, box-shadow .16s; }
+    .card:hover { transform: translateY(-4px); border-color: #bfd0fd; box-shadow: 0 18px 34px rgba(52, 88, 160, .12); }
+    .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .tool-icon { width: 54px; height: 54px; border-radius: 15px; display: grid; place-items: center; background: var(--icon-bg); color: var(--icon-color); }
+    .tool-icon svg { width: 27px; height: 27px; }
+    .card .star { border: 0; background: transparent; color: #a4afc3; width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; flex: none; }
+    .card .star svg { width: 19px; height: 19px; }
+    .card .star:hover { background: var(--pill); color: #dd9a30; }
+    .card .star[aria-pressed="true"] { color: #e4a32b; }
+    .card .star[aria-pressed="true"] svg { fill: #ffd674; }
+    .card h3 { font-size: 18px; margin: 19px 0 8px; letter-spacing: -.35px; line-height: 1.25; }
+    .card .desc { color: var(--muted); font-size: 12.5px; line-height: 1.75; margin: 0 0 14px; flex-grow: 1; min-height: 67px; }
+    .card-bottom { border-top: 1px solid var(--border); padding-top: 15px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .category { background: var(--pill); color: var(--pill-text); padding: 6px 10px; border-radius: 7px; font-size: 10px; font-weight: 650; }
+    .go { font-size: 11px; display: inline-flex; gap: 6px; align-items: center; color: var(--blue); font-weight: 750; }
+    .go svg { width: 14px; height: 14px; }
+    .empty { padding: 44px 20px; text-align: center; border: 1px dashed var(--border); border-radius: 18px; background: var(--surface); color: var(--muted); }
+    .empty strong { color: var(--ink); display: block; font-size: 16px; margin-bottom: 8px; }
+    .empty p { font-size: 13px; margin: 0; }
+    .feature-strip { margin-top: 46px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; padding: 24px 26px; background: var(--surface); border: 1px solid var(--border); border-radius: 18px; }
+    .feature { display: flex; gap: 11px; align-items: center; color: var(--muted); font-size: 12px; }
+    .feature svg { width: 21px; height: 21px; color: var(--blue); flex: none; }
+    .feature strong { display: block; color: var(--ink); font-size: 12px; margin-bottom: 2px; }
+    .feature span { line-height: 1.5; }
+    footer { margin-top: 44px; border-top: 1px solid var(--border); }
+    .footer-inner { padding-block: 26px 37px; display: flex; justify-content: space-between; gap: 15px; flex-wrap: wrap; font-size: 11px; color: var(--muted); }
+    .footer-inner a:hover { color: var(--blue); }
+    .footer-links { display: inline-flex; gap: 19px; flex-wrap: wrap; }
+    [hidden] { display: none !important; }
+    @media (max-width: 990px) {
+      .hero-deco { transform: scale(.8); right: 30px; opacity: .55; }
+      .hero h1, .hero p { position: relative; z-index: 1; }
+      .grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .feature-strip { grid-template-columns: repeat(3, minmax(0,1fr)); padding: 20px; }
+    }
+    @media (max-width: 680px) {
+      .container { width: min(100% - 30px, 560px); }
+      .topbar { height: 72px; }
+      .nav { gap: 13px; }
+      .nav a { font-size: 11px; }
+      .nav a:nth-child(2) { display:none; }
+      .brand strong { font-size: 15px; }
+      .brand small { font-size: 8px; letter-spacing: 1px; }
+      .logo { height: 37px; width: 37px; }
+      .theme-toggle { margin-left: 0; height: 37px; width: 37px; }
+      .hero { min-height: 320px; padding: 35px 24px; border-radius: 20px; }
+      .hero h1 { font-size: clamp(29px, 7.3vw, 39px); letter-spacing: -1.2px; }
+      .hero p { font-size: 12px; }
+      .hero-deco { display: none; }
+      .search { height: 52px; }
+      .workspace { padding-top: 34px; }
+      .section-heading h2 { font-size: 21px; }
+      .grid { grid-template-columns: 1fr; gap: 13px; }
+      .card { min-height: 220px; padding: 20px; }
+      .card .desc { min-height: 0; }
+      .feature-strip { margin-top: 27px; grid-template-columns: 1fr; gap: 17px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
   </style>
 </head>
 <body>
-  <header class="banner">
-    <div class="wrap">
-      <div class="brand"><div class="logo" aria-hidden="true">LS</div><span class="brandname">LocalStorage Porter</span></div>
-      <h1>Chính sách quyền riêng tư</h1>
-      <p class="lead">Privacy Policy — cách tiện ích truy cập, sử dụng và bảo vệ dữ liệu Local Storage trên trình duyệt của bạn.</p>
-      <span class="updated">Cập nhật: 22/10/2026 · Last updated: 22 October 2026</span>
-    </div>
+  <header class="container topbar">
+    <a class="brand" href="./" aria-label="Trang chủ Sproxy Tools">
+      <span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+      <span><strong>Sproxy Tools</strong><small>YOUR DIGITAL WORKSPACE</small></span>
+    </a>
+    <nav class="nav" aria-label="Điều hướng chính"><a href="#cong-cu">Công cụ</a><a href="#gioi-thieu">Giới thiệu</a></nav>
+    <button id="themeToggle" class="theme-toggle" type="button" aria-label="Bật giao diện tối" title="Chuyển sáng / tối">
+      <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.9 13.2A9 9 0 0 1 10.8 3.1 9 9 0 1 0 20.9 13.2Z"/></svg>
+    </button>
   </header>
-  <main class="wrap">
-    <article>
-      <nav aria-label="Ngôn ngữ / Language"><a href="#tieng-viet">Tiếng Việt</a><a href="#english">English</a></nav>
-      <section id="tieng-viet">
-        <h2>1. Giới thiệu</h2>
-        <p>LocalStorage Porter là tiện ích Chrome giúp người dùng xem, tìm kiếm, tạo mới, chỉnh sửa, xuất và nhập Local Storage của các website. Chính sách này giải thích cách tiện ích xử lý dữ liệu khi bạn sử dụng các chức năng đó.</p>
-        <h2>2. Dữ liệu được truy cập</h2>
-        <p>Khi người dùng chủ động sử dụng tiện ích, LocalStorage Porter có thể truy cập:</p>
-        <ul>
-          <li>Địa chỉ URL và origin của tab hoặc các tab đang mở để xác định website cần thao tác.</li>
-          <li>Các key và value trong Local Storage của website đã được chọn hoặc cấp quyền.</li>
-          <li>Nội dung JSON do người dùng dán vào để nhập dữ liệu.</li>
-          <li>Nội dung JSON được người dùng chủ động xuất vào clipboard hoặc tải thành tệp.</li>
-        </ul>
-        <p class="notice"><strong>Lưu ý:</strong> Local Storage của website có thể chứa thông tin nhận dạng, dữ liệu cá nhân hoặc token xác thực. Tiện ích xử lý các nội dung đó theo lựa chọn của người dùng mà không chủ động phân loại hoặc lọc nội dung nhạy cảm.</p>
-        <h2>3. Mục đích xử lý</h2>
-        <p>Dữ liệu chỉ được sử dụng cho các thao tác quản lý Local Storage mà người dùng yêu cầu: xem và tìm kiếm key, tạo và chỉnh sửa value, tự động lưu thay đổi vào website, sao chép hoặc tải bản sao lưu JSON, và khôi phục dữ liệu từ JSON. Chế độ nhiều website sử dụng thông tin các tab đang mở để xác định những origin có thể truy cập.</p>
-        <h2>4. Thu thập, truyền và chia sẻ</h2>
-        <p>Phiên bản này xử lý dữ liệu trực tiếp trên thiết bị của người dùng. Tiện ích không có máy chủ tiếp nhận dữ liệu, không chủ động gửi nội dung Local Storage đến nhà phát triển, không tích hợp quảng cáo, công cụ phân tích hành vi hoặc dịch vụ theo dõi. Nhà phát triển không bán hay chia sẻ dữ liệu Local Storage của người dùng với bên thứ ba.</p>
-        <p>Chỉ khi người dùng chọn Export hoặc lưu tệp thì dữ liệu mới được sao chép vào clipboard hoặc lưu tại vị trí do người dùng chọn. Nội dung dán vào để Import được xử lý trên trình duyệt và ghi vào Local Storage của website mục tiêu.</p>
-        <h2>5. Quyền truy cập trình duyệt</h2>
-        <p>Tiện ích sử dụng quyền truy cập tab hiện tại, thực thi mã đọc/ghi Local Storage trên website được chọn, tìm các tab đang mở và sao chép JSON vào clipboard khi người dùng nhấn lệnh tương ứng. Quyền truy cập nhiều website được yêu cầu riêng khi người dùng chủ động sử dụng chế độ nhiều domain.</p>
-        <h2>6. Lưu giữ, bảo mật và kiểm soát dữ liệu</h2>
-        <p>Tiện ích không duy trì kho lưu trữ riêng của nhà phát triển cho dữ liệu Local Storage. Những thay đổi được ghi vào Local Storage của website; tệp JSON đã xuất được người dùng tự quản lý. Dữ liệu trong clipboard hoặc tệp xuất có thể chứa thông tin nhạy cảm: không chia sẻ chúng với người không tin cậy.</p>
-        <p>Người dùng có thể xóa dữ liệu Local Storage thông qua công cụ của trình duyệt, xóa các tệp JSON đã lưu, thu hồi quyền truy cập website hoặc gỡ cài đặt tiện ích trong Chrome.</p>
-        <h2>7. Giới hạn</h2>
-        <p>Chế độ nhiều domain chỉ truy cập các website HTTP/HTTPS đang mở và có quyền phù hợp. Tiện ích không sao lưu Cookies, Session Storage hoặc IndexedDB. Nhập Local Storage không bảo đảm khôi phục đăng nhập do website có thể yêu cầu xác thực riêng.</p>
-        <h2>8. Cập nhật và liên hệ</h2>
-        <p>Chính sách này có thể được cập nhật khi chức năng hoặc cách xử lý dữ liệu thay đổi. Để liên hệ nhà phát triển, vui lòng sử dụng kênh hỗ trợ được công bố trên trang Chrome Web Store của LocalStorage Porter.</p>
-      </section>
-      <section id="english" lang="en">
-        <h2>Privacy Policy (English)</h2>
-        <h3>1. About this extension</h3>
-        <p>LocalStorage Porter is a Chrome extension for viewing, searching, adding, editing, exporting, and importing website Local Storage. This policy describes how the extension handles data when you choose to use these features.</p>
-        <h3>2. Data accessed</h3>
-        <p>When used, the extension may access the URLs and origins of open tabs, Local Storage keys and values on selected or authorized websites, JSON pasted for import, and JSON explicitly exported to the clipboard or a file. Website Local Storage may contain personal identifiers, sensitive information, or authentication tokens. The extension does not automatically classify or filter these values.</p>
-        <h3>3. Why data is processed</h3>
-        <p>Data is processed only to provide the requested Local Storage operations: listing and searching keys, adding and editing values, saving changes to the selected website, exporting JSON, and importing JSON. The multi-site option uses open-tab information to identify accessible website origins.</p>
-        <h3>4. Collection, transmission, and sharing</h3>
-        <p>The extension processes data locally on the user's device. It does not operate a developer-controlled data collection server, transmit Local Storage contents to the developer, include advertising or analytics trackers, or sell or share Local Storage contents with third parties. Clipboard copying and file downloads occur only when initiated by the user. Imported JSON is processed in the browser and written to the target website's Local Storage.</p>
-        <h3>5. Browser permissions</h3>
-        <p>The extension uses permissions to access the active tab, execute Local Storage read/write operations on selected websites, identify open tabs, and copy JSON to the clipboard when requested. Permission to access multiple website origins is requested separately when the user chooses multi-site features.</p>
-        <h3>6. Retention, security, and user control</h3>
-        <p>The developer does not maintain a separate database of exported Local Storage contents. Changes are saved to the website's Local Storage; exported files are controlled by the user. Clipboard data and backups may contain sensitive tokens. Users can clear website storage, delete their backup files, revoke website access, or uninstall the extension using Chrome settings.</p>
-        <h3>7. Limitations</h3>
-        <p>Multi-site mode supports open HTTP/HTTPS tabs for which access has been granted. The extension does not back up Cookies, Session Storage, or IndexedDB. Importing Local Storage does not guarantee restoration of a website login session.</p>
-        <h3>8. Changes and contact</h3>
-        <p>This policy may be updated if functionality or data practices change. For support, use the developer contact information listed on the LocalStorage Porter Chrome Web Store listing.</p>
-      </section>
-    </article>
+  <main class="container">
+    <section class="hero" aria-labelledby="heroTitle">
+      <span class="eyebrow"><i aria-hidden="true"></i>SPROXY TOOLKIT</span>
+      <h1 id="heroTitle">Mọi công cụ bạn cần,<br>ở cùng một nơi.</h1>
+      <p>Tập hợp những tiện ích hữu ích cho công việc hằng ngày — <strong>nhanh, gọn và dễ sử dụng</strong>. Chọn công cụ bên dưới để bắt đầu.</p>
+      <label class="search" for="searchInput">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="10.7" cy="10.7" r="6.8"/><path d="m16 16 5 5"/></svg>
+        <input id="searchInput" type="search" autocomplete="off" placeholder="Tìm công cụ... Ví dụ: QR, tỷ giá, ghi chú" aria-label="Tìm công cụ">
+        <span class="shortcut" id="searchHint" aria-hidden="true">Ctrl K</span>
+      </label>
+      <div class="hero-deco" aria-hidden="true"><span class="tile t1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h3v3h-3zM21 14v7h-3M14 21h3"/></svg></span><span class="tile t2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m4 17 6-6 4 4 6-7M20 8v5M20 8h-5M4 21h16"/></svg></span><span class="tile t3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 6h12M8 12h12M8 18h7M4 6h.01M4 12h.01M4 18h.01"/></svg></span></div>
+    </section>
+    <section id="cong-cu" class="workspace" aria-labelledby="toolsTitle">
+      <div class="section-heading">
+        <div><p class="kicker">KHÁM PHÁ BỘ CÔNG CỤ</p><h2 id="toolsTitle">Thư viện tiện ích</h2></div>
+        <span class="tool-count" id="toolCount" aria-live="polite">3 công cụ</span>
+      </div>
+      <div class="filterbar">
+        <div id="filters" class="filters" aria-label="Lọc theo danh mục"></div>
+        <button id="favOnly" class="chip fav-filter" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="m12 3 2.8 5.6 6.2.9-4.5 4.4 1.1 6.2L12 17.2 6.4 20l1.1-6.2L3 9.5l6.2-.9Z"/></svg>Đã ghim</button>
+      </div>
+      <div id="toolGrid" class="grid" aria-label="Danh sách công cụ"></div>
+      <div id="emptyState" class="empty" hidden><strong>Không tìm thấy công cụ</strong><p>Thử từ khóa hoặc bộ lọc khác nhé.</p></div>
+    </section>
+    <section id="gioi-thieu" class="feature-strip" aria-label="Điểm nổi bật">
+      <div class="feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 2 4 13h7l-1 9 10-13h-8l1-7Z"/></svg><span><strong>Truy cập nhanh</strong>Một nơi dẫn đến tất cả tiện ích.</span></div>
+      <div class="feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span><strong>Dễ mở rộng</strong>Bổ sung công cụ qua một danh sách.</span></div>
+      <div class="feature"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3M3 9h18"/></svg><span><strong>Gọn trên mọi thiết bị</strong>Tương thích máy tính và điện thoại.</span></div>
+    </section>
   </main>
-  <footer>LocalStorage Porter · Privacy Policy · No external scripts or tracking on this page</footer>
+  <footer>
+    <div class="container footer-inner">
+      <span>© <span id="year">2026</span> Sproxy Tools · Công cụ nhỏ, tiện ích lớn.</span>
+      <div class="footer-links"><a href="./privacy/">Privacy Policy</a><a href="#cong-cu">Danh sách công cụ</a></div>
+    </div>
+  </footer>
+  <script>
+  'use strict';
+  // =====================================================================
+  // THÊM CÔNG CỤ MỚI TẠI ĐÂY.
+  // Chỉ cần sao chép một object, sửa id / tên / đường dẫn / danh mục / icon.
+  // icon: 'qr', 'exchange', 'note', 'code', 'calculator', 'link', 'file', 'globe'.
+  // Các nút lọc danh mục, số lượng và tìm kiếm sẽ tự động cập nhật.
+  // =====================================================================
+  const TOOLS = [
+    {
+      id: 'genqr',
+      name: 'VietQR Generator',
+      description: 'Tạo mã QR chuyển khoản ngân hàng, xem trước ảnh và lưu lịch sử để dùng lại.',
+      url: './genqr/',
+      category: 'Tài chính',
+      icon: 'qr',
+      color: '#3664d9',
+      background: '#eaf0ff',
+      keywords: 'qr vietqr thanh toán chuyển khoản tài khoản ngân hàng link'
+    },
+    {
+      id: 'convert',
+      name: 'Currency Converter',
+      description: 'Quy đổi CNY, USD và VND hai chiều. Lưu tỷ giá riêng trên trình duyệt.',
+      url: './convert/',
+      category: 'Tài chính',
+      icon: 'exchange',
+      color: '#129b77',
+      background: '#e8f9f2',
+      keywords: 'quy đổi tiền tệ tỷ giá nhân dân tệ usd vnd cny ngoại tệ'
+    },
+    {
+      id: 'notepad',
+      name: 'Sproxy Notepad',
+      description: 'Soạn thảo văn bản, định dạng chữ, quản lý ghi chú và tự động lưu nội dung.',
+      url: './notepad/',
+      category: 'Năng suất',
+      icon: 'note',
+      color: '#8651d9',
+      background: '#f3eefe',
+      keywords: 'notepad ghi chú văn bản soạn thảo editor lưu trữ notes'
+    }
+    // Ví dụ thêm công cụ:
+    // ,{
+    //   id: 'new-tool', name: 'Công cụ mới', description: 'Mô tả ngắn',
+    //   url: './new-tool/', category: 'Tiện ích', icon: 'code',
+    //   color: '#dd7a34', background: '#fff2e7', keywords: 'từ khóa'
+    // }
+  ];
+
+  // Bộ biểu tượng SVG nội bộ; không sử dụng thư viện hoặc CDN bên ngoài.
+  const ICONS = {
+    qr: '<path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h3v3h-3zM21 14v7h-3M14 21h3"/>',
+    exchange: '<path d="M4 7h16m0 0-4-4m4 4-4 4M20 17H4m0 0 4-4m-4 4 4 4"/>',
+    note: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h6"/>',
+    code: '<path d="m8 8-4 4 4 4m8-8 4 4-4 4m-2-12-4 16"/>',
+    calculator: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h2m4 0h2m-8 4h2m4 0h2"/>',
+    link: '<path d="M10 13a5 5 0 0 0 7.1 0l3-3a5 5 0 0 0-7.1-7.1l-1.7 1.7M14 11a5 5 0 0 0-7.1 0l-3 3a5 5 0 0 0 7.1 7.1l1.7-1.7"/>',
+    file: '<path d="M5 3h9l5 5v13H5zM14 3v5h5M8 13h8M8 17h8"/>',
+    globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-5 5-5 13 0 18M12 3c5 5 5 13 0 18"/>'
+  };
+  const SVGTAG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">';
+  const STARPATH = '<path d="m12 3 2.8 5.6 6.2.9-4.5 4.4 1.1 6.2L12 17.2 6.4 20l1.1-6.2L3 9.5l6.2-.9Z"/>';
+  const ARROWPATH = '<path d="M5 12h14m-6-6 6 6-6 6"/>';
+  const $ = id => document.getElementById(id);
+  const KEY_FAVORITES = 'sproxy_tools_favorites_v1';
+  const KEY_THEME = 'sproxy_tools_theme_v1';
+  function readSaved(key, fallback) { try { const data = localStorage.getItem(key); return data === null ? fallback : JSON.parse(data); } catch { return fallback; } }
+  function save(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch { /* allow use even when storage is blocked */ } }
+  const state = { category: 'Tất cả', favoritesOnly: false, query: '', favorites: new Set(Array.isArray(readSaved(KEY_FAVORITES, [])) ? readSaved(KEY_FAVORITES, []) : []) };
+  const svg = path => SVGTAG + path + '</svg>';
+  const normalize = value => String(value || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/gi, 'd').toLowerCase();
+  const iconElement = (kind) => { const el = document.createElement('span'); el.innerHTML = svg(ICONS[kind] || ICONS.file); return el.firstChild; };
+
+  function renderCategories() {
+    const container = $('filters'); container.replaceChildren();
+    const categories = ['Tất cả', ...new Set(TOOLS.map(item => item.category))];
+    for (const category of categories) {
+      const button = document.createElement('button');
+      button.type = 'button'; button.className = 'chip' + (category === state.category ? ' active' : '');
+      button.textContent = category; button.setAttribute('aria-pressed', String(category === state.category));
+      button.addEventListener('click', () => { state.category = category; renderCategories(); renderTools(); });
+      container.append(button);
+    }
+  }
+  function createToolCard(tool) {
+    const article = document.createElement('article'); article.className = 'card';
+    article.style.setProperty('--icon-color', tool.color || '#3664d9');
+    article.style.setProperty('--icon-bg', tool.background || '#eaf0ff');
+    const top = document.createElement('div'); top.className = 'card-top';
+    const mark = document.createElement('div'); mark.className = 'tool-icon'; mark.append(iconElement(tool.icon));
+    const star = document.createElement('button'); star.type = 'button'; star.className = 'star';
+    const isFav = state.favorites.has(tool.id);
+    star.setAttribute('aria-pressed', String(isFav)); star.setAttribute('aria-label', `${isFav ? 'Bỏ ghim' : 'Ghim'} ${tool.name}`);
+    star.title = isFav ? 'Bỏ ghim công cụ' : 'Ghim công cụ'; star.innerHTML = svg(STARPATH);
+    star.addEventListener('click', () => {
+      state.favorites.has(tool.id) ? state.favorites.delete(tool.id) : state.favorites.add(tool.id);
+      save(KEY_FAVORITES, [...state.favorites]); renderTools();
+    });
+    top.append(mark, star);
+    const heading = document.createElement('h3'); const anchor = document.createElement('a');
+    anchor.href = tool.url; anchor.target = '_blank'; anchor.rel = 'noopener noreferrer'; anchor.setAttribute('aria-label', `Mở ${tool.name} trong tab mới`);
+    // Card remains fully clickable while the favorite button stays independent.
+    anchor.style.cssText = 'position:absolute;inset:0;border-radius:19px;z-index:1;';
+    const headingText = document.createElement('span'); headingText.textContent = tool.name; headingText.id = `title-${tool.id}`;
+    heading.append(headingText);
+    const desc = document.createElement('p'); desc.className = 'desc'; desc.textContent = tool.description;
+    const bottom = document.createElement('div'); bottom.className = 'card-bottom';
+    const cat = document.createElement('span'); cat.className = 'category'; cat.textContent = tool.category;
+    const open = document.createElement('span'); open.className = 'go'; open.append(document.createTextNode('Mở công cụ'), iconElementArrow());
+    bottom.append(cat, open);
+    // Keep overlay link below the independent star, while allowing click anywhere else.
+    article.append(top, heading, desc, bottom, anchor);
+    star.style.position = 'relative'; star.style.zIndex = '2';
+    article.setAttribute('aria-label', `${tool.name}: ${tool.description}`);
+    return article;
+  }
+  function iconElementArrow() { const holder = document.createElement('span'); holder.innerHTML = svg(ARROWPATH); return holder.firstChild; }
+  function renderTools() {
+    const matching = TOOLS.filter(tool => {
+      if (state.category !== 'Tất cả' && tool.category !== state.category) return false;
+      if (state.favoritesOnly && !state.favorites.has(tool.id)) return false;
+      return normalize([tool.name, tool.description, tool.category, tool.keywords].join(' ')).includes(normalize(state.query.trim()));
+    });
+    const grid = $('toolGrid'); grid.replaceChildren();
+    for (const tool of matching) grid.append(createToolCard(tool));
+    $('emptyState').hidden = matching.length > 0;
+    $('toolCount').textContent = `${matching.length}/${TOOLS.length} công cụ`;
+    $('favOnly').classList.toggle('active', state.favoritesOnly);
+    $('favOnly').setAttribute('aria-pressed', String(state.favoritesOnly));
+  }
+  function setTheme(mode) {
+    document.documentElement.dataset.theme = mode;
+    save(KEY_THEME, mode);
+    $('themeToggle').setAttribute('aria-label', mode === 'dark' ? 'Bật giao diện sáng' : 'Bật giao diện tối');
+    $('themeIcon').innerHTML = mode === 'dark'
+      ? '<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>'
+      : '<path d="M20.9 13.2A9 9 0 0 1 10.8 3.1 9 9 0 1 0 20.9 13.2Z"/>';
+  }
+  $('themeToggle').addEventListener('click', () => setTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark'));
+  $('favOnly').addEventListener('click', () => { state.favoritesOnly = !state.favoritesOnly; renderTools(); });
+  $('searchInput').addEventListener('input', e => { state.query = e.target.value; renderTools(); });
+  $('searchInput').addEventListener('keydown', e => { if (e.key === 'Escape') { e.target.value = ''; state.query = ''; renderTools(); e.target.blur(); } });
+  document.addEventListener('keydown', e => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); $('searchInput').focus(); $('searchInput').select(); }
+    if (e.key === '/' && !/^(INPUT|TEXTAREA)$/.test(document.activeElement.tagName)) { e.preventDefault(); $('searchInput').focus(); }
+  });
+  $('year').textContent = new Date().getFullYear();
+  $('searchHint').textContent = /Mac/i.test(navigator.platform) ? '⌘ K' : 'Ctrl K';
+  setTheme(readSaved(KEY_THEME, 'light') === 'dark' ? 'dark' : 'light');
+  renderCategories();
+  renderTools();
+  </script>
 </body>
 </html>
