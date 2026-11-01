@@ -37,6 +37,12 @@
     .history-notice.visible{display:block}
     @media(max-width:1300px){.history-list{max-height:430px}}
     @media(max-width:740px){.history-list{max-height:385px}}
+
+    /* Bank logos: show actual downloaded images with a legible code fallback. */
+    .bank-symbol{width:46px;height:37px;border:1px solid #e1eaf5;background:#fff;border-radius:9px;padding:3px;position:relative;overflow:hidden;font-size:10px;line-height:1.1}
+    .bank-symbol img{width:100%;height:100%;display:block;object-fit:contain;object-position:center;border:0;background:transparent}
+    .bank-choice:has(input:checked) .bank-symbol{background:#fff;border-color:#afc8f3}
+    @media(max-width:740px){.bank-symbol{width:36px;height:33px;padding:2px}.bank-choice{gap:6px}}
   </style>
 </head>
 <body>
@@ -122,6 +128,45 @@
     const $=id=>document.getElementById(id);
     let bankData=FALLBACK_BANKS, selectedCode='VCB', lastUrl='';
     const normalize=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase();
+
+    // Logos from the user-provided bank list HTML (64 distinct images).
+    // If logos/ is not available, images load directly from VietQR; then API logo;
+    // and finally fall back to bank abbreviation if no source is available.
+    const BANK_LOGO_BY_CODE = {"WVN":"2fd79b2b-bb01-48dc-9964-c8455da13a7e","MB":"58b7190b-a294-4b14-968f-cd365593893e","ACB":"e917e05e-c370-4ae7-82c9-e16c9200b3fe","VCB":"d0e196fc-3d4c-4501-b453-ac8c3df968cf","BIDV":"cb18c1b3-d661-4695-b2e8-dba8e887abd6","ICB":"22abf9a2-6ede-4e48-8b8a-9c8fc1303c22","VBA":"6cbf8835-7615-4f87-bbdb-56ee7ad7839a","TCB":"97c7b39e-812c-48b5-8126-16e187cfe91b","TPB":"40461b0d-d370-4b3f-974a-b7798a18952e","VPB":"029446c5-396b-49a1-adf2-482f2a45b8e0","STB":"a27bd680-86b4-438c-8ff0-633120c3438a","HDB":"39c89122-464a-40ab-82d6-cc0c1a45ca21","SHB":"b872b705-3d9f-4702-a723-00b008b7ffa7","OCB":"49d927d2-905d-42e2-a64e-4326da4b729f","VIB":"d7fff155-734b-46f1-ba31-d0aef434e1ba","EIB":"b3426240-7c27-4d3e-8b70-63c20145b480","MSB":"383ff0f8-d293-4916-98ff-cb88040a74ff","SEAB":"d1838a8e-3f84-4fc2-8168-a18fcb72662b","PVCB":"62fbd4d2-abda-4eb9-b465-9cf33d06037c","LPB":"27ffa8a1-534b-4262-8a8d-cd8530923377","ABB":"6435c9f3-6394-4933-874c-e82634ea78bb","BAB":"721c5812-db4d-4b16-8265-5875458cd3c9","BVB":"7b4cee38-72f5-4fb4-bef3-475b776a3801","BIDC":"c2743744-91b7-4263-9802-660f65ea2050","BNPHCM":"ab51a424-05e1-49b6-b5ba-e0a9767654b1","BNPHN":"ab51a424-05e1-49b6-b5ba-e0a9767654b1","CAKE":"69296759-ddcf-419c-9bbe-c2533f7ec025","CUB":"b454d9d6-579f-4b88-8895-227cdad97b57","VCCB":"adcc8221-b38f-46ad-a7da-7c77604d4cc7","CIMB":"55bca05e-5d46-498e-a612-928f1ff418b0","CITIBANK":"4ed640f7-1ba3-4239-9a4c-59d2a1eec3d4","COOPBANK":"7d8d778e-d00b-4925-aff6-eb5dccc4052d","DBS":"cf7e309a-739f-47ed-b0f8-fddf01ca21b0","DONGA":"acc08fda-dc3f-4617-a9bb-c8f5cd3e1bc8","GPB":"b4df2cee-f291-4be8-8398-bd397ce7ab95","HLB":"75f5860f-776a-46fe-92f8-7bf8d166d86b","HSBC":"6da4487e-c131-4162-b3c6-2b8dac8b38e3","IBK":"30a3be74-1fa5-49e7-90be-c9f8a48a1cda","IVB":"b50fcf91-5498-411c-967c-9c2e7cb5227f","KBANK":"c6b64a4f-afef-4d61-aeff-fd2bda0224f2","KEBHANAHCM":"19652c28-9ae2-44a0-b853-4f812321b096","KEBHANAHN":"19652c28-9ae2-44a0-b853-4f812321b096","KLB":"e827eab3-9d96-47fc-ac8b-926f2e8be383","UMEE":"4d3d89e6-3edd-41a5-b1e1-06c7b43e1050","KBHCM":"46b39ff6-8746-4236-9a9c-f0a9a8da6379","KBHN":"50b207cc-5c19-4b17-b609-c7b14e6ed0da","LIO":"316b3d37-3e4e-43d6-b054-517fbcc696b8","NAB":"3833ba06-b272-4922-8c6d-1ce738bd93fd","NCB":"b87583b2-bcb5-4625-8f5c-17dac9e5ea61","NONGHYUP":"aadd969d-01bd-4041-8db1-f2e8d8bbd271","OCEANBANK":"e8e63c02-26a0-493a-ab70-e9e022241b0f","PGB":"56f4e977-add6-405f-96a9-4f39d353002e","PBVN":"f63aac51-4385-4691-ba13-0e515ed1519f","SGB":"9b05cf95-6544-422d-9976-01d59e52d3b5","SCB":"699e99a6-cf77-4689-889b-d6c10db3bb37","SHBVN":"9a05a55c-b946-4513-9e44-b3493b29b25b","SCVN":"55e37047-6426-4883-8f97-d5c3ede07c36","TIMO":"af005597-37a7-463f-831c-564b851de853","UBANK":"fc89bc9b-a11e-4bf9-8d90-e3b4db5e41a0","UOB":"247d67c4-b434-4de8-9a63-278de158255c","VAB":"5bf5bf2a-53b1-4c0e-959f-f4aa87966d65","VBB":"8fdc43c4-0cc7-46eb-82c7-a4813dac60d3","VTLMONEY":"2cd19eb5-2a5a-4648-8d32-3bd669a4a2ed","VNPTMONEY":"b4e8c5b0-0e67-4ea9-a214-1f5f12caf25f","VRB":"17c01559-494a-454b-8cda-c8cc4d61e89e"};
+    const BANK_LOGO_BY_NAME = {"woori":"2fd79b2b-bb01-48dc-9964-c8455da13a7e","mbbank":"58b7190b-a294-4b14-968f-cd365593893e","acb":"e917e05e-c370-4ae7-82c9-e16c9200b3fe","vietcombank":"d0e196fc-3d4c-4501-b453-ac8c3df968cf","bidv":"cb18c1b3-d661-4695-b2e8-dba8e887abd6","vietinbank":"22abf9a2-6ede-4e48-8b8a-9c8fc1303c22","agribank":"6cbf8835-7615-4f87-bbdb-56ee7ad7839a","techcombank":"97c7b39e-812c-48b5-8126-16e187cfe91b","tpbank":"40461b0d-d370-4b3f-974a-b7798a18952e","vpbank":"029446c5-396b-49a1-adf2-482f2a45b8e0","sacombank":"a27bd680-86b4-438c-8ff0-633120c3438a","hdbank":"39c89122-464a-40ab-82d6-cc0c1a45ca21","shb":"b872b705-3d9f-4702-a723-00b008b7ffa7","ocb":"49d927d2-905d-42e2-a64e-4326da4b729f","vib":"d7fff155-734b-46f1-ba31-d0aef434e1ba","eximbank":"b3426240-7c27-4d3e-8b70-63c20145b480","msb":"383ff0f8-d293-4916-98ff-cb88040a74ff","seabank":"d1838a8e-3f84-4fc2-8168-a18fcb72662b","pvcombank":"62fbd4d2-abda-4eb9-b465-9cf33d06037c","lpbank":"27ffa8a1-534b-4262-8a8d-cd8530923377","abbank":"6435c9f3-6394-4933-874c-e82634ea78bb","bacabank":"721c5812-db4d-4b16-8265-5875458cd3c9","baovietbank":"7b4cee38-72f5-4fb4-bef3-475b776a3801","bidc":"c2743744-91b7-4263-9802-660f65ea2050","bnphcm":"ab51a424-05e1-49b6-b5ba-e0a9767654b1","bnphn":"ab51a424-05e1-49b6-b5ba-e0a9767654b1","cake":"69296759-ddcf-419c-9bbe-c2533f7ec025","cathayunitedbank":"b454d9d6-579f-4b88-8895-227cdad97b57","cbbank":"adcc8221-b38f-46ad-a7da-7c77604d4cc7","cimb":"55bca05e-5d46-498e-a612-928f1ff418b0","citibankhn":"4ed640f7-1ba3-4239-9a4c-59d2a1eec3d4","coopbank":"7d8d778e-d00b-4925-aff6-eb5dccc4052d","dbsbank":"cf7e309a-739f-47ed-b0f8-fddf01ca21b0","dongabank":"acc08fda-dc3f-4617-a9bb-c8f5cd3e1bc8","gpbank":"b4df2cee-f291-4be8-8398-bd397ce7ab95","hongleong":"75f5860f-776a-46fe-92f8-7bf8d166d86b","hsbc":"6da4487e-c131-4162-b3c6-2b8dac8b38e3","ibk":"30a3be74-1fa5-49e7-90be-c9f8a48a1cda","indovinabank":"b50fcf91-5498-411c-967c-9c2e7cb5227f","kbank":"c6b64a4f-afef-4d61-aeff-fd2bda0224f2","kebhanahcmbank":"19652c28-9ae2-44a0-b853-4f812321b096","kebhanahnbank":"19652c28-9ae2-44a0-b853-4f812321b096","kienlongbank":"e827eab3-9d96-47fc-ac8b-926f2e8be383","kookminhcm":"46b39ff6-8746-4236-9a9c-f0a9a8da6379","kookminhn":"50b207cc-5c19-4b17-b609-c7b14e6ed0da","liobank":"316b3d37-3e4e-43d6-b054-517fbcc696b8","namabank":"3833ba06-b272-4922-8c6d-1ce738bd93fd","ncb":"b87583b2-bcb5-4625-8f5c-17dac9e5ea61","nonghyup":"aadd969d-01bd-4041-8db1-f2e8d8bbd271","oceanbank":"e8e63c02-26a0-493a-ab70-e9e022241b0f","pgbank":"56f4e977-add6-405f-96a9-4f39d353002e","publicbank":"f63aac51-4385-4691-ba13-0e515ed1519f","saigonbank":"9b05cf95-6544-422d-9976-01d59e52d3b5","scb":"699e99a6-cf77-4689-889b-d6c10db3bb37","shinhanbank":"9a05a55c-b946-4513-9e44-b3493b29b25b","standardchartered":"55e37047-6426-4883-8f97-d5c3ede07c36","timo":"af005597-37a7-463f-831c-564b851de853","ubank":"fc89bc9b-a11e-4bf9-8d90-e3b4db5e41a0","unitedoverseas":"247d67c4-b434-4de8-9a63-278de158255c","vietabank":"5bf5bf2a-53b1-4c0e-959f-f4aa87966d65","vietbank":"8fdc43c4-0cc7-46eb-82c7-a4813dac60d3","vietcapitalbank":"e6f12053-6283-4359-97b1-28e0cf4141ce","viettelmoney":"2cd19eb5-2a5a-4648-8d32-3bd669a4a2ed","vnptmoney":"b4e8c5b0-0e67-4ea9-a214-1f5f12caf25f","vrb":"17c01559-494a-454b-8cda-c8cc4d61e89e"};
+    const BANK_IMAGE_HOST = 'https://vietqr.vn/api/vietqr/images/';
+    function addBankImage(container, bank) {
+      const abbr = bank.code.substring(0, 3);
+      container.textContent = abbr;
+      const key = String(bank.name || '').trim().toLowerCase();
+      const logoId = BANK_LOGO_BY_NAME[key] || BANK_LOGO_BY_CODE[bank.code];
+      const candidates = [];
+      if(logoId) {
+        candidates.push('./logos/' + logoId + '.png');
+        candidates.push(BANK_IMAGE_HOST + logoId);
+      }
+      // The official banks API includes an optional full logo URL.
+      if(typeof bank.logo === 'string' && /^https:\/\//i.test(bank.logo)) candidates.push(bank.logo);
+      candidates.push('https://api.vietqr.io/img/' + encodeURIComponent(bank.code) + '.png');
+      if(!candidates.length) return;
+      const img = document.createElement('img');
+      img.alt = 'Logo ' + bank.name;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.referrerPolicy = 'no-referrer';
+      let index = 0;
+      // Keep the image in the DOM so native lazy-loading starts correctly.
+      container.replaceChildren(img);
+      img.addEventListener('error', () => {
+        index += 1;
+        if(index < candidates.length) img.src = candidates[index];
+        else {
+          img.remove();
+          container.textContent = abbr;
+        }
+      });
+      img.src = candidates[0];
+    }
     const bankSort=(a,b)=>{const i=PRIORITY.indexOf(a.code),j=PRIORITY.indexOf(b.code);return (i===-1?999:i)-(j===-1?999:j)||a.name.localeCompare(b.name,'vi')};
     const findBank=()=>bankData.find(b=>b.code===selectedCode)||bankData[0];
     function chooseBank(code){selectedCode=code;const bank=findBank();$('chosenBank').textContent='Ngân hàng nhận: '+bank.name+' · Mã '+bank.code+' · BIN '+(bank.bin||'—');renderBanks();}
@@ -133,7 +178,7 @@
       for(const bank of filtered){
         const label=document.createElement('label');label.className='bank-choice';label.title=bank.name+' • '+bank.code+' • '+bank.bin;
         const radio=document.createElement('input');radio.type='radio';radio.name='bank';radio.value=bank.code;radio.checked=bank.code===selectedCode;radio.addEventListener('change',()=>chooseBank(bank.code));
-        const symbol=document.createElement('span');symbol.className='bank-symbol';symbol.textContent=bank.code.substring(0,3);
+        const symbol=document.createElement('span');symbol.className='bank-symbol';addBankImage(symbol,bank);
         const info=document.createElement('span');info.className='bank-text';const strong=document.createElement('strong');strong.textContent=bank.name;
         const small=document.createElement('small');small.textContent=`${bank.code} · ${bank.bin||'—'}`;info.append(strong,small);label.append(radio,symbol,info);frag.append(label);
       } list.append(frag);
@@ -143,7 +188,7 @@
         const res=await fetch('https://api.vietqr.io/v2/banks',{method:'GET',mode:'cors',cache:'no-store'});
         if(!res.ok)throw new Error('API HTTP '+res.status);
         const body=await res.json();if(!Array.isArray(body.data)||body.data.length<15)throw new Error('Invalid bank list');
-        const fresh=body.data.filter(b=>/^[A-Za-z0-9_]+$/.test(b.code||'')&&/^\d{6}$/.test(String(b.bin||''))).map(b=>({code:b.code,name:b.shortName||b.name||b.code,bin:String(b.bin)}));
+        const fresh=body.data.filter(b=>/^[A-Za-z0-9_]+$/.test(b.code||'')&&/^\d{6}$/.test(String(b.bin||''))).map(b=>({code:b.code,name:b.shortName||b.name||b.code,bin:String(b.bin),logo:typeof b.logo==='string'?b.logo:''}));
         const byCode=new Map(FALLBACK_BANKS.map(b=>[b.code,b]));for(const b of fresh)byCode.set(b.code,b);
         bankData=[...byCode.values()].sort(bankSort);renderBanks();chooseBank(selectedCode);
       }catch(err){console.info('Danh sách ngân hàng dự phòng đang được sử dụng:',err.message);}
@@ -245,7 +290,7 @@
     function removeHistory(id){
       const item=qrHistory.find(row=>row.id===id);
       if(!item)return;
-      // if(!window.confirm('Xóa lịch sử QR của '+(safeText(item.bankName,100)||'ngân hàng')+' - '+safeText(item.accountNo,19)+'?'))return;
+      if(!window.confirm('Xóa lịch sử QR của '+(safeText(item.bankName,100)||'ngân hàng')+' - '+safeText(item.accountNo,19)+'?'))return;
       const next=qrHistory.filter(row=>row.id!==id);
       if(persistHistory(next)){qrHistory=next;renderHistory();}
     }
@@ -280,7 +325,7 @@
     $('addInfo').addEventListener('input',()=>{$('memoCount').textContent=$('addInfo').value.length+'/50';});
     $('template').addEventListener('change',()=>{$('customField').classList.toggle('visible',$('template').value==='custom');});
     $('exampleBtn').addEventListener('click',()=>{
-      chooseBank('VCB');$('accountNo').value='0691000330501';$('amount').value='50.000.000';$('amountPreview').textContent='50.000.000 VND';$('addInfo').value='Anh Duong Tam';$('memoCount').textContent='13/50';$('accountName').value='NGUYEN HUU MANH';
+      chooseBank('VBA');$('accountNo').value='7303205153070';$('amount').value='50.000.000';$('amountPreview').textContent='50.000.000 VND';$('addInfo').value='Anh Duong Tam';$('memoCount').textContent='13/50';$('accountName').value='ĐOAN THI LOAN';
       $('template').value='custom';$('customField').classList.add('visible');$('customTemplate').value='7N4E6e2';$('hostSelect').value='api.vietqr.io';$('imageType').value='jpg';clearError();
     });
     $('clearBtn').addEventListener('click',()=>{
