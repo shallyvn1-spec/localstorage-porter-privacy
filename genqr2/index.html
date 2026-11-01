@@ -16,13 +16,19 @@ main{max-width:1520px;margin:auto;padding:28px 25px 60px}.intro{margin:0 0 24px}
 @media(max-width:1180px){.layout{grid-template-columns:195px minmax(320px,1fr)}.preview-col{grid-column:2;grid-row:2}}@media(max-width:750px){main{padding:22px 13px 35px}.layout{display:block}.layout>.card{margin-bottom:14px}.type-list{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.type-btn{min-height:72px;padding:8px 3px;display:flex;flex-direction:column;gap:5px;text-align:center;margin:0}.type-btn strong{font-size:11px}.type-btn small{display:none}.type-icon{width:30px;height:30px;font-size:16px}.side-note{display:none}.form-pad,.preview-pad{padding:15px}.topinner{padding:12px 14px}.brand strong{font-size:16px}.brand small{font-size:8px}.toplinks a{display:none}.intro{margin-bottom:14px}.intro h1{font-size:29px}}@media(max-width:400px){.form-grid{grid-template-columns:1fr;gap:0}.field.full{grid-column:1}.type-list{grid-template-columns:repeat(4,1fr)}.actiongrid{gap:6px}.btn{padding:9px 8px;font-size:11px}}
 @media print{.topbar,.intro,.type-panel,.form-panel,.result-box,.disclaimer,.hist-section,.actiongrid,.muted-bar,footer,.status,.stage-info,.cardhead,.summary{display:none!important}body{background:#fff!important}main{padding:0!important;max-width:none!important}.layout{display:block!important}.preview-col{display:block!important;border:none!important;box-shadow:none!important}.preview-pad{padding:0!important}.preview-stage{border:none!important;background:#fff!important;min-height:0!important;padding:10mm!important}.preview-stage img,.preview-stage canvas{width:100mm!important;height:100mm!important;max-width:none!important;max-height:none!important;object-fit:contain}}
 .actiongrid .save-history{grid-column:1/-1;background:#e8f7f0;color:#18764c;border-color:#a9dcc3;font-size:13px;min-height:46px}.actiongrid .save-history:hover{background:#d7f4e5}.actiongrid .save-history:disabled{opacity:.6}
+
+/* Saved history: display exact QR settings and two color swatches. */
+.hist-select .hist-settings{display:flex;align-items:center;gap:6px;margin-top:6px;color:#506987;font-size:10px;white-space:nowrap}
+.hist-settings>span{overflow:hidden;text-overflow:ellipsis;min-width:0;margin-right:1px}
+.hist-swatch{display:inline-block;width:15px;height:15px;border-radius:5px;flex:0 0 15px;border:1px solid #b4c2d5;box-shadow:0 0 0 1px #ffffffad inset}
+.hist-select:hover .hist-settings{color:#245ac2}
 </style>
 </head>
 <body>
 <header class="topbar"><div class="topinner"><div class="brand"><span class="brand-logo">QR</span><div><strong>Sproxy QR Studio</strong><small>SÁU LOẠI MÃ QR · MỘT CÔNG CỤ</small></div></div><div class="toplinks"><a href="../">← Sproxy Tools</a><button type="button" id="resetAll">Đặt lại</button></div></div></header>
 <main><div class="intro"><div class="eyebrow">● QR GENERATOR · KHÔNG CẦN ĐĂNG NHẬP</div><h1>Tạo mã QR theo nhu cầu</h1><p>Tạo QR cho văn bản, danh thiếp, website, Wi-Fi, SMS và Email. Xem trước, tải ảnh và chủ động lưu lịch sử trên trình duyệt.</p></div>
 <div class="layout">
-<aside class="card type-panel"><div class="cardhead"><h2>Loại mã QR</h2><p>Chọn nội dung bạn muốn mã hóa</p></div><div class="sidepad"><nav class="type-list" id="typeList" aria-label="Chọn loại QR"></nav><div class="side-note">Sáu loại QR được tạo ngay trên thiết bị. Chỉ lưu vào lịch sử khi bạn nhấn Save.</div></div></aside>
+<aside class="card type-panel"><div class="cardhead"><h2>Loại mã QR</h2><p>Chọn nội dung bạn muốn mã hóa</p></div><div class="sidepad"><nav class="type-list" id="typeList" aria-label="Chọn loại QR"></nav><div class="side-note">Sáu loại QR được tạo ngay trên thiết bị. Lưu cả nội dung và cấu hình ảnh QR khi bạn nhấn Save.</div></div></aside>
 <section class="card form-panel"><div class="cardhead"><h2 id="formTitle">Thông tin tạo QR</h2><p id="formSubtitle">Nhập dữ liệu để tạo mã QR.</p></div><form id="qrForm" class="form-pad" novalidate><div id="dynamicFields"></div>
 <div class="field-group"><div class="group-title">🎨 Tùy chỉnh QR</div><div class="form-grid">
 <div class="field"><label for="qrSize">Kích thước ảnh <em id="sizeLabel">640 px</em></label><input id="qrSize" type="range" min="240" max="1200" step="40" value="640"></div>
@@ -35,7 +41,7 @@ main{max-width:1520px;margin:auto;padding:28px 25px 60px}.intro{margin:0 0 24px}
 <section class="card preview-col"><div class="cardhead"><h2>Kết quả & lịch sử</h2><p>Xem trước, tải xuống, lưu, sao chép và in mã QR</p></div><div class="preview-pad"><div class="preview-stage" id="previewStage"><div class="placeholder" id="emptyPreview"><div class="blank-qr">▦</div><b>Chưa tạo mã QR</b>Điền thông tin và nhấn “Tạo mã QR”.</div><canvas id="qrCanvas" hidden></canvas></div><p class="stage-info" id="stageInfo">Ảnh QR sẽ được hiển thị tại đây.</p><div id="status" class="status" role="status" aria-live="polite"></div>
 <div class="summary" id="summary"></div><div class="result-box"><div class="result-label">Dữ liệu được mã hóa trong QR</div><textarea id="resultText" readonly placeholder="Dữ liệu sẽ xuất hiện sau khi tạo..." aria-label="Dữ liệu QR"></textarea></div>
 <div class="actiongrid"><button type="button" id="saveHistory" class="btn save-history" disabled>▣ Save QR vào lịch sử</button><button type="button" id="copyData" class="btn" disabled>⧉ Sao chép nội dung</button><button type="button" id="copyImage" class="btn" disabled>▣ Sao chép ảnh</button><button type="button" id="downloadPng" class="btn primary" disabled>↓ Tải PNG</button><button type="button" id="downloadSvg" class="btn" disabled>↓ Tải SVG</button><button type="button" id="printQr" class="btn" disabled>⎙ In mã QR</button><button type="button" id="openQr" class="btn" disabled>↗ Mở ảnh/link</button></div>
-<div class="hist-section"><div class="hist-title"><h3>Lịch sử tạo QR</h3><span class="hist-count" id="historyCount">0 mục</span></div><div id="historyList" class="hist-list"></div><div class="stats"><span>Chỉ lưu khi nhấn Save · tối đa 200 mục</span><button type="button" id="clearHistory" class="btn danger" style="min-height:28px;padding:5px 8px;font-size:10px">Xóa tất cả</button></div></div></div>
+<div class="hist-section"><div class="hist-title"><h3>Lịch sử tạo QR</h3><span class="hist-count" id="historyCount">0 mục</span></div><div id="historyList" class="hist-list"></div><div class="stats"><span>Lưu cả form và tùy chỉnh QR · tối đa 200 mục</span><button type="button" id="clearHistory" class="btn danger" style="min-height:28px;padding:5px 8px;font-size:10px">Xóa tất cả</button></div></div></div>
 <div class="disclaimer">🔐 Dữ liệu lịch sử lưu trên trình duyệt này, không tự đồng bộ sang máy khác. Mật khẩu Wi-Fi được lưu nguyên văn nếu bạn xác nhận; không dùng cho thông tin nhạy cảm trên thiết bị dùng chung.</div></section>
 </div></main><footer>Sproxy QR Studio · Sáu loại mã QR được tạo trực tiếp trên trình duyệt · Không cần đăng nhập hay backend.</footer>
 <script>
@@ -1312,6 +1318,28 @@ const FIELDS={
 };
 const HISTORY_KEY='sproxy_qr_studio_history_v1';
 const MAX_HISTORY=200;
+const DEFAULT_QR_STYLE=Object.freeze({size:640,level:'M',dark:'#142d52',light:'#ffffff'});
+function validateQrStyle(candidate){
+ // Preserve compatibility with history saved by previous versions.
+ const src=(candidate&&typeof candidate==='object')?candidate:{};
+ const requestedSize=Number(src.size);
+ const size=Number.isFinite(requestedSize)&&requestedSize>=240&&requestedSize<=1200
+   ?Math.max(240,Math.min(1200,240+Math.round((requestedSize-240)/40)*40)) : DEFAULT_QR_STYLE.size;
+ const level=['L','M','Q','H'].includes(src.level)?src.level:DEFAULT_QR_STYLE.level;
+ const validHex=v=>typeof v==='string'&&/^#[0-9a-f]{6}$/i.test(v);
+ const dark=validHex(src.dark)?src.dark.toLowerCase():DEFAULT_QR_STYLE.dark;
+ const light=validHex(src.light)?src.light.toLowerCase():DEFAULT_QR_STYLE.light;
+ return {size,level,dark,light};
+}
+function applyQrStyle(style){
+ const item=validateQrStyle(style);
+ $('qrSize').value=String(item.size);
+ $('qrLevel').value=item.level;
+ $('qrDark').value=item.dark;
+ $('qrLight').value=item.light;
+ $('sizeLabel').textContent=$('qrSize').value+' px';
+ return item;
+}
 let activeType='text', history=[], current=null, savedHistoryId=null;
 const DEFAULTS={wifiType:'WPA'};
 const normalize=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/Đ/g,'D').toLowerCase();
@@ -1363,12 +1391,17 @@ function presentQR(data){
  return true;
 }
 function getFormValues(){const values={};for(const f of FIELDS[activeType]){values[f.id]=f.type==='checkbox'?$(f.id).checked:$(f.id).value;}return values;}
-function currentStyle(){return {size:Number($('qrSize').value),level:$('qrLevel').value,dark:$('qrDark').value,light:$('qrLight').value};}
+function currentStyle(){return validateQrStyle({
+ size:Number($('qrSize').value),level:$('qrLevel').value,
+ dark:$('qrDark').value,light:$('qrLight').value
+});}
 function pushHistory(data){
  const fields=getFormValues();
  if(activeType==='wifi'&&fields.wifiType!=='nopass'&&fields.wifiPass){
   if(!confirm('QR Wi-Fi chứa mật khẩu. Nếu lưu, mật khẩu sẽ được ghi nguyên văn vào localStorage và có thể được các trang cùng domain truy cập. Bạn có muốn lưu không?'))return false;
  }
+ // Capture the four QR rendering settings at the same moment as the form values.
+ // Use the existing `style` field and HISTORY_KEY so previously saved items still work.
  const entry={id:crypto.randomUUID?.()||String(Date.now()+Math.random()),createdAt:Date.now(),type:activeType,fields,style:currentStyle(),meta:data.meta};
  const previous=history;history=[entry,...history].slice(0,MAX_HISTORY);
  if(!persist()){history=previous;renderHistory();return false;}
@@ -1380,21 +1413,39 @@ function readHistory(){
  renderHistory();
 }
 function persist(){try{localStorage.setItem(HISTORY_KEY,JSON.stringify(history));return true;}catch{updateStatus('Không thể lưu lịch sử vào localStorage; hãy kiểm tra dung lượng hoặc chế độ riêng tư.',true);return false;}}
-function renderHistory(){const list=$('historyList');list.replaceChildren();$('historyCount').textContent=history.length+' mục';if(!history.length){const div=document.createElement('div');div.className='hist-empty';div.textContent='Chưa có QR nào được lưu. Tạo mã rồi nhấn Save để lưu.';list.append(div);return;}
- for(const entry of history){const box=document.createElement('div');box.className='hist-item';const pick=document.createElement('button');pick.type='button';pick.className='hist-select';const type=TYPES.find(x=>x.id===entry.type);const title=document.createElement('strong');title.textContent=(type?.name||entry.type)+' · '+String(entry.meta||'').slice(0,80);const when=document.createElement('small');when.textContent=new Date(entry.createdAt||Date.now()).toLocaleString('vi-VN');pick.append(title,when);pick.onclick=()=>restoreHistory(entry);const del=document.createElement('button');del.type='button';del.className='hist-delete';del.textContent='🗑';del.title='Xóa mục lịch sử';del.setAttribute('aria-label','Xóa lịch sử QR');del.onclick=()=>{if(!confirm('Xóa mã QR này khỏi lịch sử?'))return;history=history.filter(x=>x.id!==entry.id);persist();renderHistory();if(savedHistoryId===entry.id){savedHistoryId=null;if(current){$('saveHistory').disabled=false;$('saveHistory').textContent='▣ Save QR vào lịch sử';}}};box.append(pick,del);list.append(box);}}
+function renderHistory(){
+ const list=$('historyList');list.replaceChildren();$('historyCount').textContent=history.length+' mục';
+ if(!history.length){const div=document.createElement('div');div.className='hist-empty';div.textContent='Chưa có QR nào được lưu. Tạo mã rồi nhấn Save để lưu.';list.append(div);return;}
+ for(const entry of history){
+  const box=document.createElement('div');box.className='hist-item';
+  const pick=document.createElement('button');pick.type='button';pick.className='hist-select';
+  pick.title='Khôi phục thông tin, kích thước, mức sửa lỗi và hai màu của QR';
+  const type=TYPES.find(x=>x.id===entry.type);
+  const title=document.createElement('strong');title.textContent=(type?.name||entry.type)+' · '+String(entry.meta||'').slice(0,80);
+  const when=document.createElement('small');when.textContent=new Date(entry.createdAt||Date.now()).toLocaleString('vi-VN');
+  const style=validateQrStyle(entry.style || entry.settings);
+  const settings=document.createElement('span');settings.className='hist-settings';
+  const settingText=document.createElement('span');settingText.textContent=style.size+' px · Sửa lỗi '+style.level;
+  const darkDot=document.createElement('i');darkDot.className='hist-swatch';darkDot.style.backgroundColor=style.dark;
+  darkDot.title='Màu QR: '+style.dark;darkDot.setAttribute('aria-label',darkDot.title);
+  const lightDot=document.createElement('i');lightDot.className='hist-swatch';lightDot.style.backgroundColor=style.light;
+  lightDot.title='Màu nền: '+style.light;lightDot.setAttribute('aria-label',lightDot.title);
+  settings.append(settingText,darkDot,lightDot);
+  pick.append(title,when,settings);pick.onclick=()=>restoreHistory(entry);
+  const del=document.createElement('button');del.type='button';del.className='hist-delete';del.textContent='🗑';del.title='Xóa mục lịch sử';del.setAttribute('aria-label','Xóa lịch sử QR');
+  del.onclick=()=>{if(!confirm('Xóa mã QR này khỏi lịch sử?'))return;history=history.filter(x=>x.id!==entry.id);persist();renderHistory();if(savedHistoryId===entry.id){savedHistoryId=null;if(current){$('saveHistory').disabled=false;$('saveHistory').textContent='▣ Save QR vào lịch sử';}}};
+  box.append(pick,del);list.append(box);
+ }
+}
 function restoreHistory(entry){
  if(!TYPES.some(t=>t.id===entry.type))return;
  setType(entry.type);
  for(const [id,value] of Object.entries(entry.fields||{})){const el=$(id);if(!el)continue;if(el.type==='checkbox')el.checked=!!value;else el.value=String(value??'');}
- if(entry.style){
-  if(Number.isFinite(Number(entry.style.size)))$('qrSize').value=String(entry.style.size);
-  if(['L','M','Q','H'].includes(entry.style.level))$('qrLevel').value=entry.style.level;
-  if(/^#[0-9a-f]{6}$/i.test(entry.style.dark||''))$('qrDark').value=entry.style.dark;
-  if(/^#[0-9a-f]{6}$/i.test(entry.style.light||''))$('qrLight').value=entry.style.light;
-  $('sizeLabel').textContent=$('qrSize').value+' px';
- }
+ // Always apply all four settings BEFORE generating the preview.
+ // Older records without style use explicit defaults, never stale values from another QR.
+ const restoredStyle=applyQrStyle(entry.style || entry.settings);
  if(entry.type==='wifi'&&$('wifiType').value==='nopass')$('wrap-wifiPass').style.display='none';
- try{const data=buildData(activeType);if(presentQR(data)){ savedHistoryId=entry.id;$('saveHistory').disabled=true; $('saveHistory').textContent='✓ Đã lưu trong lịch sử';updateStatus('Đã mở QR đã lưu. Bạn có thể xem, tải ảnh hoặc in lại.');}}
+ try{const data=buildData(activeType);if(presentQR(data)){ savedHistoryId=entry.id;$('saveHistory').disabled=true; $('saveHistory').textContent='✓ Đã lưu trong lịch sử';updateStatus('Đã khôi phục form và cấu hình QR ('+restoredStyle.size+' px · sửa lỗi '+restoredStyle.level+' · màu QR '+restoredStyle.dark+' · nền '+restoredStyle.light+').');}}
  catch(err){updateStatus('Đã điền lại form nhưng chưa thể tạo QR: '+err.message,true);}
  window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -1409,7 +1460,7 @@ function clearForm(){const keep=activeType;setType(keep);}
 function attachEvents(){const tab=$('typeList');for(const t of TYPES){const b=document.createElement('button');b.type='button';b.className='type-btn';b.dataset.type=t.id;b.innerHTML=`<span class="type-icon">${t.icon}</span><span><strong>${t.name}</strong><small>${t.sub}</small></span>`;b.addEventListener('click',()=>setType(t.id));tab.append(b);}setType('text');
  $('qrForm').addEventListener('submit',event=>{event.preventDefault();try{const data=buildData(activeType);if(presentQR(data)){updateStatus('Đã tạo mã QR. Nhấn Save QR vào lịch sử nếu muốn giữ lại để xem sau.');}}catch(err){updateStatus(err.message,true);}});
  $('saveHistory').addEventListener('click',()=>{if(!current)return;try{const data=buildData(activeType);if(!presentQR(data))return;if(pushHistory(data)){$('saveHistory').disabled=true;$('saveHistory').textContent='✓ Đã lưu trong lịch sử';updateStatus('Đã lưu QR vào lịch sử trên trình duyệt này.');}}catch(err){updateStatus('Không thể lưu QR: '+err.message,true);}});
- $('sampleBtn').addEventListener('click',fillSample);$('clearBtn').addEventListener('click',clearForm);$('resetAll').addEventListener('click',()=>{if(confirm('Đặt lại biểu mẫu và tùy chỉnh QR? (Không xóa lịch sử)')){setType('text');$('qrSize').value=640;$('qrLevel').value='M';$('qrDark').value='#142d52';$('qrLight').value='#ffffff';$('sizeLabel').textContent='640 px';}});
+ $('sampleBtn').addEventListener('click',fillSample);$('clearBtn').addEventListener('click',clearForm);$('resetAll').addEventListener('click',()=>{if(confirm('Đặt lại biểu mẫu và tùy chỉnh QR? (Không xóa lịch sử)')){setType('text');applyQrStyle(DEFAULT_QR_STYLE);}});
  $('qrSize').addEventListener('input',()=>{$('sizeLabel').textContent=$('qrSize').value+' px';});for(const id of ['qrSize','qrDark','qrLight','qrLevel'])$(id).addEventListener('change',()=>{if(current){try{const data=buildData(activeType);if(data.payload===current.payload)presentQR(data);}catch{/* form may have changed; user can regenerate */}}});
  $('copyData').addEventListener('click',async()=>{if(!current)return;try{await navigator.clipboard.writeText(current.payload);updateStatus('Đã sao chép dữ liệu mã QR.');}catch{$('resultText').focus();$('resultText').select();updateStatus('Không tự sao chép được; hãy nhấn Ctrl+C vào ô nội dung.',true);}});
  $('copyImage').onclick=copyImage;$('downloadPng').onclick=downloadPNG;$('downloadSvg').onclick=downloadSVG;$('printQr').onclick=()=>window.print();$('openQr').onclick=()=>{if(!current)return;{const url=$('qrCanvas').toDataURL('image/png');window.open(url,'_blank','noopener,noreferrer');}};
